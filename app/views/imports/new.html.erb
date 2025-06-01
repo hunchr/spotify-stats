@@ -1,0 +1,6 @@
+<%= form_with url: imports_path do |f| %>
+  <%= f.label :history %>
+  <%= f.file_field :history, accept: ".json", multiple: true, required: true %>
+  <br><br>
+  <%= f.submit t("helpers.button.import") %>
+<% end %>

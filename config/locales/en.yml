@@ -1,0 +1,6 @@
+en:
+  helpers:
+    button:
+      import: Import
+    label:
+      history: Streaming history
