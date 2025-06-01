@@ -4,3 +4,11 @@ en:
       import: Import
     label:
       history: Streaming history
+
+  songs:
+    artist_name: Artist
+    first_played_at: First played
+    last_played_at: Last played
+    name: Name
+    plays_count: Plays
+    rank: Rank

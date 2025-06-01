@@ -1,0 +1,34 @@
+body {
+  font-family: Menlo, Consolas, monospace;
+}
+
+h1 {
+  font-size: 1.375rem;
+  padding: 0 1rem;
+}
+
+h2 {
+  font-size: 1.125rem;
+  padding: 0 1rem;
+}
+
+td {
+  max-width: 16rem;
+  overflow: hidden;
+  padding: 0.125rem 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+th {
+  padding: 0.125rem 1rem;
+  text-align: left;
+}
+
+.max-w-12 {
+  max-width: 12rem;
+}
+
+.text-right {
+  text-align: right;
+}
