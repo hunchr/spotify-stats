@@ -2,5 +2,5 @@
 
 Rails.application.routes.draw do
   resources :imports, only: %i[new create]
-  resources :songs, only: %i[index]
+  resources :songs, only: %i[index show]
 end

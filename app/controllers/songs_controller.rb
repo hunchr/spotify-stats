@@ -20,6 +20,11 @@ class SongsController < ApplicationController
       .limit(params[:limit].to_i).offset page_offset
   end
 
+  def show
+    @song = Song.find params[:id]
+    @plays = @song.plays
+  end
+
   private
 
   def date_range

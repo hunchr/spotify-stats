@@ -5,10 +5,20 @@ en:
     label:
       history: Streaming history
 
+  plays:
+    date: Date
+    duration: Duration
+    number: "#"
+
   songs:
     artist_name: Artist
     first_played_at: First played
     last_played_at: Last played
     name: Name
+    plays: Plays
     plays_count: Plays
     rank: Rank
+    stats:
+      title: Stats
+      total_duration: Total duration
+      total_plays: Total plays

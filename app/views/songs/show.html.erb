@@ -1,0 +1,43 @@
+<h1><%= @song.artist.name %> - <%= @song.name %></h1>
+
+<h2><%= t "songs.stats.title" %></h2>
+<table>
+  <tbody>
+    <tr>
+      <th><%= t "songs.stats.total_plays" %></th>
+      <td><%= @plays.length %></td>
+    </tr>
+    <tr>
+      <th><%= t "songs.stats.total_duration" %></th>
+      <td><%= format_duration_in_words @plays.sum(&:ms_played) %></td>
+    </tr>
+    <tr>
+      <th><%= t "songs.first_played_at" %></th>
+      <td><%= @plays.first.created_at.to_date %></td>
+    </tr>
+    <tr>
+      <th><%= t "songs.last_played_at" %></th>
+      <td><%= @plays.last.created_at.to_date %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= t "songs.plays" %></h2>
+<table>
+  <thead>
+    <tr>
+      <% %w[number date duration].each do |attr| %>
+        <th><%= t "plays.#{attr}" %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @plays.each_with_index do |play, index| %>
+      <tr>
+        <td class="text-right"><%= index.next %></td>
+        <td><%= format_time play.created_at %></td>
+        <td class="text-right"><%= format_duration play.ms_played %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
