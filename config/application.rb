@@ -19,4 +19,5 @@ class Stats < Rails::Application
   config.enable_reloading = true
   config.i18n.available_locales = %i[en]
   config.i18n.default_locale = :en
+  config.i18n.raise_on_missing_translations = true
 end

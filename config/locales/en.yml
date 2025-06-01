@@ -19,6 +19,7 @@ en:
     last_played_at: Last played
     name: Name
     plays: Plays
+    plays_count: Plays
     rank: Rank
     stats:
       most_plays_in: Most plays in a
