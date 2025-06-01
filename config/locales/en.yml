@@ -7,8 +7,11 @@ en:
 
   plays:
     date: Date
+    day: Day
     duration: Duration
+    month: Month
     number: "#"
+    year: Year
 
   songs:
     artist_name: Artist
@@ -16,9 +19,10 @@ en:
     last_played_at: Last played
     name: Name
     plays: Plays
-    plays_count: Plays
     rank: Rank
     stats:
+      most_plays_in: Most plays in a
+      plays_count: "%{count} plays"
       title: Stats
       total_duration: Total duration
       total_plays: Total plays

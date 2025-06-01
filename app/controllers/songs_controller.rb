@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SongsController < ApplicationController
+  FORMAT = { day: "%-d %b %Y", month: "%b %Y", year: "%Y" }.freeze
   SORT = {
     "name" => "asc", "artist_name" => "asc", "plays_count" => "desc",
     "first_played_at" => "asc", "last_played_at" => "desc"
@@ -22,10 +23,21 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find params[:id]
-    @plays = @song.plays
+    @plays = @song.plays.order :created_at
+    @most_plays = {
+      day: most_plays_in("%Y-%m-%d"),
+      month: most_plays_in("%Y-%m-01"),
+      year: most_plays_in("%Y-01-01"),
+    }
   end
 
   private
+
+  def most_plays_in(fmt)
+    @song.plays
+      .select("STRFTIME('#{fmt}', created_at) as date, COUNT(*) as plays_count")
+      .group(:date).order(plays_count: :desc).first
+  end
 
   def date_range
     params[:after].to_date.beginning_of_day..params[:before].to_date.end_of_day

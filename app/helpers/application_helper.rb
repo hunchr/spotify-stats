@@ -5,6 +5,10 @@ module ApplicationHelper
     time.strftime "%Y-%m-%d %H:%M"
   end
 
+  def format_date(string)
+    string.to_date.strftime "%-d %b %Y"
+  end
+
   def format_duration(ms)
     min = ms / 60_000
 
