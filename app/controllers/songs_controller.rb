@@ -2,23 +2,26 @@
 
 class SongsController < ApplicationController
   FORMAT = { day: "%-d %b %Y", month: "%b %Y", year: "%Y" }.freeze
-  SORT = {
+  DIRS = %w[asc desc].freeze
+  DEFAULT_DIR = {
     "name" => "asc", "artist_name" => "asc", "plays_count" => "desc",
-    "first_played_at" => "asc", "last_played_at" => "desc"
+    "first_played_at" => "asc", "last_played_at" => "desc", "date" => "desc"
   }.freeze
+  INDEX_HEADERS = %w[
+    name artist_name plays_count first_played_at last_played_at
+  ].freeze
+  LIMIT = 200
 
-  before_action :redirect_invalid_params, only: %i[index]
   helper_attr :page_offset
 
   def index
-    @songs = Song.joins(:artist, :plays)
+    @songs = sort_and_limit INDEX_HEADERS, Song.joins(:artist, :plays)
       .where(plays: { created_at: date_range })
-      .select("songs.*, artists.name as artist_name," \
-              "COUNT(plays.id) as plays_count," \
-              "MIN(plays.created_at) as first_played_at," \
-              "MAX(plays.created_at) as last_played_at")
-      .group(songs: :id).order(params[:sort] => params[:dir])
-      .limit(params[:limit].to_i).offset page_offset
+      .select("songs.*, artists.name AS artist_name," \
+              "COUNT(plays.id) AS plays_count," \
+              "MIN(plays.created_at) AS first_played_at," \
+              "MAX(plays.created_at) AS last_played_at")
+      .group(songs: :id)
   end
 
   def show
@@ -35,42 +38,27 @@ class SongsController < ApplicationController
 
   def most_plays_in(fmt)
     @song.plays
-      .select("STRFTIME('#{fmt}', created_at) as date, COUNT(*) as plays_count")
+      .select("STRFTIME('#{fmt}', created_at) AS date, COUNT(*) AS plays_count")
       .group(:date).order(plays_count: :desc).first
   end
 
   def date_range
-    params[:after].to_date.beginning_of_day..params[:before].to_date.end_of_day
+    params[:after]&.to_time..params[:before]&.to_date&.end_of_day
+  rescue StandardError
+    ..nil
+  end
+
+  def sort_and_limit(sort, songs)
+    key = sort.include?(params[:sort]) ? params[:sort] : sort.last
+    dir = DIRS.include?(params[:dir]) ? params[:dir] : DEFAULT_DIR[key]
+
+    songs.order(key => dir).limit(LIMIT).offset page_offset
   end
 
   def page_offset
-    params[:limit].to_i * params[:page].to_i.pred
-  end
-
-  def redirect_invalid_params
-    first = Play.order(created_at: :asc).first.created_at.to_date
-    last = Play.order(created_at: :desc).first.created_at.to_date
-    after = params[:after]&.to_date
-    before = params[:before]&.to_date
-
-    song_params = {
-      after: fallback(:after, first, after&.>=(first)),
-      before: fallback(:before, last, before&.<=(last) && after&.<(before)),
-      sort: fallback(:sort, :last_played_at, SORT.key?(params[:sort])),
-      dir: fallback(:dir, :desc, SORT.value?(params[:dir])),
-      page: fallback(:page, 1, (1..999).cover?(params[:page].to_i)),
-      limit: fallback(:limit, 200, (1..).cover?(params[:limit].to_i)),
-    }
-
-    redirect_to songs_path song_params if @error
-  end
-
-  def fallback(param, default, valid)
-    if valid
-      params[param]
-    else
-      @error = true
-      default
+    @page_offset ||= begin
+      page = params[:page].to_i
+      page < 1 ? 0 : page.pred * LIMIT
     end
   end
 end

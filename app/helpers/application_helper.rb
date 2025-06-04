@@ -27,10 +27,10 @@ module ApplicationHelper
     end
   end
 
-  def songs_path_sort(sort, dir)
+  def sort_path(path, sort, dir)
     dir = params[:dir] == "asc" ? "desc" : "asc" if params[:sort] == sort
 
-    songs_path params.permit(:after, :before, :sort, :dir, :page, :limit)
-      .merge sort:, dir:
+    public_send path, params.to_unsafe_h.except("controller", "action")
+      .merge(sort:, dir:)
   end
 end

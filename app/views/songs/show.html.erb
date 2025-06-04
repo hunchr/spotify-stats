@@ -1,42 +1,42 @@
 <h1><%= @song.artist.name %> - <%= @song.name %></h1>
 
-<h2><%= t "songs.stats.title" %></h2>
+<h2><%= t "stats.title" %></h2>
 <table>
   <tbody>
     <tr>
-      <th><%= t "songs.stats.total_plays" %></th>
+      <th><%= t "stats.total_plays" %></th>
       <td class="text-right">
-        <%= t "songs.stats.plays_count", count: @plays.length %>
+        <%= t "stats.plays_count", count: @plays.length %>
       </td>
     </tr>
     <tr>
-      <th><%= t "songs.stats.total_duration" %></th>
+      <th><%= t "stats.total_duration" %></th>
       <td class="text-right">
         <%= format_duration_in_words @plays.sum(&:ms_played) %>
       </td>
     </tr>
     <tr>
-      <th><%= t "songs.first_played_at" %></th>
+      <th><%= t "labels.first_played_at" %></th>
       <td class="text-right"><%= format_date @plays.first.created_at %></td>
     </tr>
     <tr>
-      <th><%= t "songs.last_played_at" %></th>
+      <th><%= t "labels.last_played_at" %></th>
       <td class="text-right"><%= format_date @plays.last.created_at %></td>
     </tr>
   </tbody>
 </table>
 
-<h2><%= t "songs.stats.most_plays_in" %></h2>
+<h2><%= t "stats.most_plays_in" %></h2>
 <table>
   <tbody>
     <% SongsController::FORMAT.each do |time, format| %>
       <tr>
-        <th><%= t "plays.#{time}" %></th>
+        <th><%= t "labels.#{time}" %></th>
         <td class="text-right">
           <%= @most_plays[time].date.to_date.strftime format %>
         </td>
         <td class="text-right">
-          <%= t "songs.stats.plays_count",
+          <%= t "stats.plays_count",
                 count: @most_plays[time].plays_count %>
         </td>
       </tr>
@@ -44,12 +44,12 @@
   </tbody>
 </table>
 
-<h2><%= t "songs.plays" %></h2>
+<h2><%= t "labels.plays" %></h2>
 <table>
   <thead>
     <tr>
       <% %w[number date duration].each do |attr| %>
-        <th><%= t "plays.#{attr}" %></th>
+        <th><%= t "labels.#{attr}" %></th>
       <% end %>
     </tr>
   </thead>

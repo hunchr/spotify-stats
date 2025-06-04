@@ -1,0 +1,22 @@
+<thead>
+  <tr>
+    <th><%= t "labels.number" %></th>
+    <% path = "#{"#{name}_" unless name == :index}songs_path" %>
+    <% SongsController.const_get("#{name.upcase}_HEADERS").each do |header| %>
+      <th><%= link_to t("labels.#{header}"), sort_path(path, header,
+                      SongsController::DEFAULT_DIR[header]) %></th>
+    <% end %>
+  </tr>
+</thead>
+<tbody>
+  <% songs.each_with_index do |song, index| %>
+    <tr>
+      <td><%= index.next + page_offset %></td>
+      <td><%= link_to song.name, song_path(song) %></td>
+      <td class="max-w-12"><%= song.artist_name %></td>
+      <td class="text-right"><%= song.plays_count %></td>
+      <td><%= song.first_played_at[..9] %></td>
+      <td><%= song.last_played_at[..9] %></td>
+    </tr>
+  <% end %>
+</tbody>
