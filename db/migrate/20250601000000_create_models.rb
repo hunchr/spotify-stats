@@ -11,7 +11,7 @@ class CreateModels < ActiveRecord::Migration[8.0]
 
   def create_artists
     create_table :artists do |t|
-      t.string :name, null: false, index: true
+      t.string :name, null: false, index: { unique: true }
     end
   end
 

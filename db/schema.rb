@@ -13,7 +13,7 @@
 ActiveRecord::Schema[8.0].define(version: 2025_06_01_000000) do
   create_table "artists", force: :cascade do |t|
     t.string "name", null: false
-    t.index ["name"], name: "index_artists_on_name"
+    t.index ["name"], name: "index_artists_on_name", unique: true
   end
 
   create_table "plays", force: :cascade do |t|
