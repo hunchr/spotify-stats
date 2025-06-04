@@ -17,12 +17,12 @@ module ApplicationHelper
 
   def format_duration_in_words(ms)
     s = ms / 1000
-    min = s / 60
 
     case ms
-    when 3_600_000.. then "#{min / 60}h #{min - (min / 60 * 60)}min"
-    when 60_000..3_599_999 then "#{min}min #{s - (min * 60)}s"
-    when 1000..59_999 then "#{s}s"
+    when 86_400_000.. then "#{s / 86_400}d"
+    when 3_600_000.. then "#{s / 3600}h #{(s % 3600) / 60}min"
+    when 60_000.. then "#{s / 60}min #{s % 60}s"
+    when 1_000.. then "#{s}s"
     else "#{ms}ms"
     end
   end

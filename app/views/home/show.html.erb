@@ -1,0 +1,32 @@
+<h1><%= t "stats.title" %></h1>
+<table>
+  <tbody>
+    <tr>
+      <th><%= t "labels.artists" %></th>
+      <td class="text-right"><%= Artist.count %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.songs" %></th>
+      <td class="text-right"><%= Song.count %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.plays" %></th>
+      <td class="text-right"><%= @plays_count %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.duration" %></th>
+      <td class="text-right">
+        <%= format_duration_in_words Play.sum :ms_played %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= t "labels.pages" %></h2>
+<table>
+  <tbody>
+    <% @paths.each do |path| %>
+      <tr><td><%= link_to path, path %></td></tr>
+    <% end %>
+  </tbody>
+</table>
