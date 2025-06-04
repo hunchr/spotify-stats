@@ -13,7 +13,9 @@
     <tr>
       <td><%= index.next + page_offset %></td>
       <td><%= link_to song.name, song_path(song) %></td>
-      <td class="max-w-12"><%= song.artist_name %></td>
+      <td class="max-w-12">
+        <%= link_to song.artist_name, artist_path(song.artist_id) %>
+      </td>
       <td class="text-right"><%= song.plays_count %></td>
 
       <% if song.respond_to? :date %>
