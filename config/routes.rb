@@ -2,5 +2,7 @@
 
 Rails.application.routes.draw do
   resources :imports, only: %i[new create]
-  resources :songs, only: %i[index show]
+  resources :songs, only: %i[index show] do
+    get :on_repeat, on: :collection
+  end
 end
