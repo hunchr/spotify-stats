@@ -5,16 +5,37 @@ class ImportsController < ApplicationController
     history = params["history"]
     return if history.empty?
 
-    history.each { JSON.parse(it.read).each { create_play it } }
+    @data = {}
+    history.each { JSON.parse(it.read).each { add_play it } }
+    insert_data!
+    redirect_to root_path
   end
 
   private
 
-  def create_play(entry)
-    Artist.find_or_create_by!(name: entry["master_metadata_album_artist_name"])
-      .songs.find_or_create_by!(name: entry["master_metadata_track_name"])
-      .plays.create! ms_played: entry["ms_played"], created_at: entry["ts"]
-  rescue ActiveRecord::RecordInvalid
-    nil
+  def add_play(entry)
+    return if entry["incognito_mode"] || entry["spotify_track_uri"].nil?
+
+    ((@data[entry["master_metadata_album_artist_name"]] ||= {})[
+      entry["master_metadata_track_name"]] ||= []) <<
+      [entry["ms_played"], entry["ts"]]
+  end
+
+  def insert_data!
+    artist_ids = insert_all!(Artist, @data.keys.compact.map { { name: it } })
+    song_plays = []
+    song_ids = insert_all!(Song, @data.values.each_with_index.map do |songs, i|
+      songs.map do |name, plays|
+        song_plays << plays.map { { ms_played: it[0], created_at: it[1] } }
+        { name:, artist_id: artist_ids[i] }
+      end
+    end)
+
+    insert_all!(Play, song_plays.each_with_index
+      .map { |plays, i| plays.map { { **it, song_id: song_ids[i] } } })
+  end
+
+  def insert_all!(model, values)
+    model.insert_all!(values.flatten).rows.map(&:first)
   end
 end
