@@ -7,13 +7,13 @@ class SongsController < ApplicationController
     "name" => "asc", "artist_name" => "asc", "plays_count" => "desc",
     "first_played_at" => "asc", "last_played_at" => "desc", "date" => "desc"
   }.freeze
-  INDEX_HEADERS = %w[
-    name artist_name plays_count first_played_at last_played_at
-  ].freeze
-  ON_REPEAT_HEADERS = %w[name artist_name plays_count date].freeze
   LIMIT = 200
 
   helper_attr :page_offset
+
+  INDEX_HEADERS = %w[
+    name artist_name plays_count first_played_at last_played_at
+  ].freeze
 
   def index
     @songs = sort_and_limit INDEX_HEADERS, Song.joins(:artist, :plays)
@@ -34,6 +34,8 @@ class SongsController < ApplicationController
       year: most_plays_in("%Y-01-01"),
     }
   end
+
+  ON_REPEAT_HEADERS = %w[name artist_name plays_count date].freeze
 
   def on_repeat
     subquery = Play.joins(:song, song: :artist)

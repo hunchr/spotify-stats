@@ -1,0 +1,200 @@
+plugins:
+  - rubocop-performance
+
+AllCops:
+  Exclude:
+    - log/**/*
+    - node_modules/**/*
+    - storage/**/*
+    - tmp/**/*
+    - db/schema.rb
+  NewCops: enable
+  StringLiteralsFrozenByDefault: true
+  SuggestExtensions: false
+
+Gemspec/DependencyVersion:
+  Enabled: true
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstArrayElementLineBreak:
+  AllowMultilineFinalElement: true
+  Enabled: true
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementLineBreak:
+  AllowMultilineFinalElement: true
+  Enabled: true
+
+Layout/FirstMethodArgumentLineBreak:
+  AllowMultilineFinalElement: true
+  Enabled: true
+
+Layout/FirstMethodParameterLineBreak:
+  AllowMultilineFinalElement: true
+  Enabled: true
+
+Layout/LineLength:
+  Max: 80
+
+Layout/MultilineAssignmentLayout:
+  Enabled: true
+  EnforcedStyle: same_line
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/SpaceAroundOperators:
+  AllowForAlignment: false
+  EnforcedStyleForExponentOperator: space
+
+Lint/EmptyClass:
+  AllowComments: true
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/ModuleLength:
+  Max: 200
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Performance/Casecmp:
+  Enabled: true
+
+Performance/IoReadlines:
+  Enabled: true
+
+Performance/SelectMap:
+  Enabled: true
+
+Style/AndOr:
+  EnforcedStyle: always
+
+Style/ArrayCoercion:
+  Enabled: true
+
+Style/AsciiComments:
+  Enabled: true
+
+Style/AutoResourceCleanup:
+  Enabled: true
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Style/ClassMethodsDefinitions:
+  Enabled: true
+  EnforcedStyle: self_class
+
+Style/DateTime:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyElse:
+  EnforcedStyle: empty
+
+Style/EndlessMethod:
+  EnforcedStyle: disallow
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always_true
+
+Style/HashAsLastArrayItem:
+  EnforcedStyle: no_braces
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: always
+
+Style/InlineComment:
+  Enabled: true
+
+Style/InvertibleUnlessCondition:
+  Enabled: true
+
+Style/MagicCommentFormat:
+  ValueCapitalization: lowercase
+
+Style/MethodCallWithArgsParentheses:
+  AllowParenthesesInMultilineCall: true
+  Enabled: true
+  EnforcedStyle: omit_parentheses
+  IgnoreMacros: false
+
+Style/MixinGrouping:
+  EnforcedStyle: grouped
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/NumberedParameters:
+  EnforcedStyle: disallow
+
+Style/RequireOrder:
+  Enabled: true
+
+Style/ReturnNil:
+  Enabled: true
+
+Style/SafeNavigationChainLength:
+  Enabled: false
+
+Style/Send:
+  Enabled: true
+
+Style/SendWithLiteralMethodName:
+  AllowSend: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringMethods:
+  Enabled: true
+
+Style/SymbolArray:
+  MinSize: 1
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/WordArray:
+  MinSize: 1
+
+Style/YodaExpression:
+  Enabled: true
