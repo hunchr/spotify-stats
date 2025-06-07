@@ -27,10 +27,9 @@ module ApplicationHelper
     end
   end
 
-  def sort_path(path, sort, dir)
+  def sort_path(sort, dir)
     dir = params[:dir] == "asc" ? "desc" : "asc" if params[:sort] == sort
 
-    public_send path, params.to_unsafe_h.except("controller", "action")
-      .merge(sort:, dir:)
+    url_for(**params.to_unsafe_h, sort:, dir:)
   end
 end

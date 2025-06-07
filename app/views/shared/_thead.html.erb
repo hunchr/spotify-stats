@@ -1,0 +1,10 @@
+<thead>
+  <tr>
+    <th><%= t "labels.number" %></th>
+    <% controller.class
+        .const_get("#{params[:action].upcase}_HEADERS").each do |header| %>
+      <% dir = controller.class::DEFAULT_DIR[header] %>
+      <th><%= link_to t("labels.#{header}"), sort_path(header, dir) %></th>
+    <% end %>
+  </tr>
+</thead>

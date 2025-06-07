@@ -1,14 +1,5 @@
 <table>
-  <thead>
-    <tr>
-      <th><%= t "labels.number" %></th>
-      <% path = "#{"#{name}_" unless name == :index}songs_path" %>
-      <% SongsController.const_get("#{name.upcase}_HEADERS").each do |header| %>
-        <th><%= link_to t("labels.#{header}"), sort_path(path, header,
-                        SongsController::DEFAULT_DIR[header]) %></th>
-      <% end %>
-    </tr>
-  </thead>
+  <%= render "shared/thead" %>
   <tbody>
     <% songs.each_with_index do |song, index| %>
     <% if index == 179 %>
