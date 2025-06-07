@@ -1,29 +1,36 @@
-<thead>
-  <tr>
-    <th><%= t "labels.number" %></th>
-    <% path = "#{"#{name}_" unless name == :index}songs_path" %>
-    <% SongsController.const_get("#{name.upcase}_HEADERS").each do |header| %>
-      <th><%= link_to t("labels.#{header}"), sort_path(path, header,
-                      SongsController::DEFAULT_DIR[header]) %></th>
-    <% end %>
-  </tr>
-</thead>
-<tbody>
-  <% songs.each_with_index do |song, index| %>
+<table>
+  <thead>
     <tr>
-      <td><%= index.next + page_offset %></td>
-      <td><%= link_to song.name, song_path(song) %></td>
-      <td class="max-w-12">
-        <%= link_to song.artist_name, artist_path(song.artist_id) %>
-      </td>
-      <td class="text-right"><%= song.plays_count %></td>
-
-      <% if song.respond_to? :date %>
-        <td><%= song.date %></td>
-      <% else %>
-        <td><%= song.first_played_at[..9] %></td>
-        <td><%= song.last_played_at[..9] %></td>
+      <th><%= t "labels.number" %></th>
+      <% path = "#{"#{name}_" unless name == :index}songs_path" %>
+      <% SongsController.const_get("#{name.upcase}_HEADERS").each do |header| %>
+        <th><%= link_to t("labels.#{header}"), sort_path(path, header,
+                        SongsController::DEFAULT_DIR[header]) %></th>
       <% end %>
     </tr>
-  <% end %>
-</tbody>
+  </thead>
+  <tbody>
+    <% songs.each_with_index do |song, index| %>
+    <% if index == 179 %>
+      <tr data-controller="infinite-scroll"
+          data-page="<%= params[:page] || 1 %>">
+    <% else %>
+      <tr>
+    <% end %>
+        <td><%= index.next + page_offset %></td>
+        <td><%= link_to song.name, song_path(song) %></td>
+        <td class="max-w-12">
+          <%= link_to song.artist_name, artist_path(song.artist_id) %>
+        </td>
+        <td class="text-right"><%= song.plays_count %></td>
+
+        <% if song.respond_to? :date %>
+          <td><%= song.date %></td>
+        <% else %>
+          <td><%= song.first_played_at[..9] %></td>
+          <td><%= song.last_played_at[..9] %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
