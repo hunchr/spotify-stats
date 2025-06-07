@@ -36,11 +36,10 @@
       <tr>
         <th><%= t "labels.#{time}" %></th>
         <td class="text-right">
-          <%= @most_plays[time].date.to_date.strftime format %>
+          <%= @most_plays[time].to_date.strftime format %>
         </td>
         <td class="text-right">
-          <%= t "stats.plays_count",
-                count: @most_plays[time].plays_count %>
+          <%= t "stats.plays_count", count: @most_plays["#{time}_count"] %>
         </td>
       </tr>
     <% end %>

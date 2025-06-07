@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SongsController < ApplicationController
-  FORMAT = { day: "%-d %b %Y", month: "%b %Y", year: "%Y" }.freeze
+  FORMAT = { "day" => "%-d %b %Y", "month" => "%b %Y", "year" => "%Y" }.freeze
   DIRS = %w[asc desc].freeze
   DEFAULT_DIR = {
     "name" => "asc", "artist_name" => "asc", "plays_count" => "desc",
@@ -28,11 +28,11 @@ class SongsController < ApplicationController
   def show
     @song = Song.find params[:id]
     @plays = @song.plays.order :created_at
-    @most_plays = {
-      day: most_plays_in("%Y-%m-%d"),
-      month: most_plays_in("%Y-%m-01"),
-      year: most_plays_in("%Y-01-01"),
-    }
+    @most_plays = ActiveRecord::Base.connection.execute(
+      "SELECT * FROM (#{most_plays_in "day", "%Y-%m-%d"}) " \
+      "CROSS JOIN (#{most_plays_in "month", "%Y-%m-01"}) " \
+      "CROSS JOIN (#{most_plays_in "year", "%Y-01-01"})",
+    ).first
   end
 
   ON_REPEAT_HEADERS = %w[name artist_name plays_count date].freeze
@@ -49,10 +49,11 @@ class SongsController < ApplicationController
 
   private
 
-  def most_plays_in(fmt)
+  def most_plays_in(time, fmt)
     @song.plays
-      .select("STRFTIME('#{fmt}', created_at) AS date, COUNT(*) AS plays_count")
-      .group(:date).order(plays_count: :desc).first
+      .select("STRFTIME('#{fmt}', created_at) AS #{time}," \
+              "COUNT(*) AS #{time}_count")
+      .group(time).order("#{time}_count": :desc).limit(1).to_sql
   end
 
   def date_range

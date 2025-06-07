@@ -178,6 +178,9 @@ Style/SendWithLiteralMethodName:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
 Style/StringMethods:
   Enabled: true
 
