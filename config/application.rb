@@ -15,6 +15,7 @@ class Stats < Rails::Application
   config.load_defaults 8.0
 
   config.active_record.verbose_query_logs = true
+  config.assets.quiet = true
   config.eager_load = false
   config.enable_reloading = true
   config.i18n.available_locales = %i[en]
