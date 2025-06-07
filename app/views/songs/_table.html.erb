@@ -4,7 +4,7 @@
     <% songs.each_with_index do |song, index| %>
     <% if index == 179 %>
       <tr data-controller="infinite-scroll"
-          data-page="<%= params[:page] || 1 %>">
+          data-page="<%= params[:page].presence || 1 %>">
     <% else %>
       <tr>
     <% end %>

@@ -16,7 +16,7 @@ class SongsController < ApplicationController
   ].freeze
 
   def index
-    @songs = sort_and_limit INDEX_HEADERS, Song.joins(:artist, :plays)
+    @songs = filter INDEX_HEADERS, Song.joins(:artist, :plays)
       .where(plays: { created_at: date_range })
       .select("songs.*, artists.name AS artist_name," \
               "COUNT(plays.id) AS plays_count," \
@@ -38,13 +38,13 @@ class SongsController < ApplicationController
   ON_REPEAT_HEADERS = %w[name artist_name plays_count date].freeze
 
   def on_repeat
-    subquery = Play.joins(:song, song: :artist)
-      .select("songs.*, artists.name AS artist_name," \
-              "DATE(plays.created_at) AS date, COUNT(*) AS plays_count")
+    subquery = Play.joins(:song).where(created_at: date_range)
+      .select("songs.*, DATE(plays.created_at) AS date,COUNT(*) AS plays_count")
       .group(:date, songs: :id).to_sql
 
-    @songs = sort_and_limit ON_REPEAT_HEADERS,
-      Song.from("(#{subquery}) AS songs").where(plays_count: 5..)
+    @songs = filter ON_REPEAT_HEADERS,
+      Song.joins(:artist).select("songs.*, artists.name AS artist_name")
+        .from("(#{subquery}) AS songs").where(plays_count: 5..)
   end
 
   private
@@ -56,16 +56,23 @@ class SongsController < ApplicationController
   end
 
   def date_range
-    params[:after]&.to_time..params[:before]&.to_date&.end_of_day
+    params[:since]&.to_time..params[:until]&.to_date&.end_of_day
   rescue StandardError
     ..nil
   end
 
-  def sort_and_limit(sort, songs)
-    key = sort.include?(params[:sort]) ? params[:sort] : sort.last
-    dir = DIRS.include?(params[:dir]) ? params[:dir] : DEFAULT_DIR[key]
+  def filter(headers, songs)
+    sort = headers.include?(params[:sort]) ? params[:sort] : headers.last
+    dir = DIRS.include?(params[:dir]) ? params[:dir] : DEFAULT_DIR[sort]
 
-    songs.order(key => dir).limit(LIMIT).offset page_offset
+    if params[:q].present?
+      songs = songs.where "songs.name LIKE ?", "#{params[:q]}%"
+    end
+    if params[:artist_name].present?
+      songs = songs.where "artists.name LIKE ?", "#{params[:artist_name]}%"
+    end
+
+    songs.order(sort => dir).limit(LIMIT).offset page_offset
   end
 
   def page_offset

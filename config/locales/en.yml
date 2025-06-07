@@ -2,8 +2,13 @@ en:
   helpers:
     button:
       import: Import
+      search: Search
     label:
+      artist_name: Artist
       history: Streaming history
+      q: Song
+      since: From
+      until: To
 
   labels:
     artist_name: Artist

@@ -29,6 +29,17 @@ th {
   text-align: left;
 }
 
+.filters {
+  display: flex;
+  padding: 0.5rem 1rem 1rem 1rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    margin-right: 0.5rem;
+  }
+}
+
 .max-w-12 {
   max-width: 12rem;
 }

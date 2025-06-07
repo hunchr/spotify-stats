@@ -1,0 +1,21 @@
+<%= form_with url: request.path, method: :get, class: "filters" do |f| %>
+  <% %i[sort dir page].each do |param| %>
+    <%= f.hidden_field param, value: params[param] %>
+  <% end %>
+
+  <% %i[since until].each do |param| %>
+    <div>
+      <%= f.label param %>
+      <%= f.date_field param, value: params[param] %>
+    </div>
+  <% end %>
+
+  <% %i[q artist_name].each do |param| %>
+    <div>
+      <%= f.label param %>
+      <%= f.text_field param, value: params[param] %>
+    </div>
+  <% end %>
+
+  <%= f.submit t("helpers.button.search"), name: nil %>
+<% end %>
