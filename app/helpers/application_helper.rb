@@ -22,11 +22,16 @@ module ApplicationHelper
     s = ms / 1000
 
     case ms
-    when 86_400_000.. then "#{s / 86_400}d"
-    when 3_600_000.. then "#{s / 3600}h #{(s % 3600) / 60}min"
-    when 60_000.. then "#{s / 60}min #{s % 60}s"
-    when 1_000.. then "#{s}s"
-    else "#{ms}ms"
+    when (86_400_000..)
+      h = (s % 86_400) / 3600
+      "#{s / 86_400}d#{" #{h}h" if h.nonzero?}"
+    when (3_600_000..)
+      min = (s % 3600) / 60
+      "#{s / 3600}h#{" #{min}min" if min.nonzero?}"
+    when (60_000..)
+      "#{s / 60}min"
+    else
+      "#{s}s"
     end
   end
 

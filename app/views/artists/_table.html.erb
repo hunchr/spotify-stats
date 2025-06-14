@@ -13,6 +13,9 @@
           <%= link_to artist.name, artist_path(artist) %>
         </td>
         <td class="text-right"><%= artist.plays_count %></td>
+        <td class="text-right">
+          <%= format_duration_in_words artist.duration %>
+        </td>
         <td><%= artist.first_played_at[..9] %></td>
         <td><%= artist.last_played_at[..9] %></td>
       </tr>

@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   DIRS = %w[asc desc].freeze
   DEFAULT_DIR = {
     "name" => "asc", "artist_name" => "asc", "plays_count" => "desc",
-    "first_played_at" => "asc", "last_played_at" => "desc", "date" => "desc"
+    "duration" => "desc", "first_played_at" => "asc",
+    "last_played_at" => "desc", "date" => "desc"
   }.freeze
   LIMIT = 200
 

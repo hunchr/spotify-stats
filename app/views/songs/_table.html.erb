@@ -14,6 +14,9 @@
           <%= link_to song.artist_name, artist_path(song.artist_id) %>
         </td>
         <td class="text-right"><%= song.plays_count %></td>
+        <td class="text-right">
+          <%= format_duration_in_words song.duration %>
+        </td>
 
         <% if song.respond_to? :date %>
           <td><%= song.date %></td>
