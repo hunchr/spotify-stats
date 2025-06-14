@@ -32,7 +32,7 @@
 <h2><%= t "stats.most_plays_in" %></h2>
 <table>
   <tbody>
-    <% SongsController::FORMAT.each do |time, format| %>
+    <% ApplicationHelper::DATE_FORMAT.each do |time, format| %>
       <tr>
         <th><%= t "labels.#{time}" %></th>
         <td class="text-right">

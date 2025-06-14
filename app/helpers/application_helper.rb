@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  DATE_FORMAT = { "day" => "%-d %b %Y", "month" => "%b %Y", "year" => "%Y" }
+    .freeze
+
   def format_time(time)
     time.strftime "%Y-%m-%d %H:%M"
   end

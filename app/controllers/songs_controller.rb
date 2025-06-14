@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 
 class SongsController < ApplicationController
-  FORMAT = { "day" => "%-d %b %Y", "month" => "%b %Y", "year" => "%Y" }.freeze
-  DIRS = %w[asc desc].freeze
-  DEFAULT_DIR = {
-    "name" => "asc", "artist_name" => "asc", "plays_count" => "desc",
-    "first_played_at" => "asc", "last_played_at" => "desc", "date" => "desc"
-  }.freeze
-  LIMIT = 200
-
-  helper_attr :page_offset
-
   INDEX_HEADERS = %w[
     name artist_name plays_count first_played_at last_played_at
   ].freeze
@@ -56,16 +46,7 @@ class SongsController < ApplicationController
       .group(time).order("#{time}_count": :desc).limit(1).to_sql
   end
 
-  def date_range
-    params[:since]&.to_time..params[:until]&.to_date&.end_of_day
-  rescue StandardError
-    ..nil
-  end
-
-  def filter(headers, songs)
-    sort = headers.include?(params[:sort]) ? params[:sort] : headers.last
-    dir = DIRS.include?(params[:dir]) ? params[:dir] : DEFAULT_DIR[sort]
-
+  def filter(attrs, songs)
     if params[:q].present?
       songs = songs.where "songs.name LIKE ?", "#{params[:q]}%"
     end
@@ -73,13 +54,6 @@ class SongsController < ApplicationController
       songs = songs.where "artists.name LIKE ?", "#{params[:artist_name]}%"
     end
 
-    songs.order(sort => dir).limit(LIMIT).offset page_offset
-  end
-
-  def page_offset
-    @page_offset ||= begin
-      page = params[:page].to_i
-      page < 1 ? 0 : page.pred * LIMIT
-    end
+    sort_and_paginate attrs, songs
   end
 end

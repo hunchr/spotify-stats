@@ -6,7 +6,7 @@ class HomeController < ApplicationController
     return redirect_to new_import_path if @plays_count.zero?
 
     @paths = [
-      songs_path, song_path(1), on_repeat_songs_path, new_import_path
+      artists_path, songs_path, on_repeat_songs_path, new_import_path
     ]
   end
 end

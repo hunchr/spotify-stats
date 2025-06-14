@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <% %i[q artist_name].each do |param| %>
+  <% search_params.each do |param| %>
     <div>
       <%= f.label param %>
       <%= f.text_field param, value: params[param] %>

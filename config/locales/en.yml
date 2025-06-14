@@ -6,7 +6,7 @@ en:
     label:
       artist_name: Artist
       history: Streaming history
-      q: Song
+      q: Name
       since: From
       until: To
 
