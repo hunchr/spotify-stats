@@ -10,8 +10,7 @@ class SongsController < ApplicationController
               "SUM(plays.ms_played) AS plays_length," \
               "MIN(plays.created_at) AS first_played_at," \
               "MAX(plays.created_at) AS last_played_at")
-      .where(plays: { created_at: date_range })
-      .group(songs: :id).to_sql
+      .where(filter_date).group(songs: :id).to_sql
 
     render_table INDEX, Song.select("*").from("(#{songs}) AS songs")
   end
@@ -24,8 +23,7 @@ class SongsController < ApplicationController
               "COUNT(plays.id) AS plays_count," \
               "SUM(plays.ms_played) AS plays_length," \
               "DATE(plays.created_at) AS date")
-      .where(plays: { created_at: date_range })
-      .group(:date, songs: :id).to_sql
+      .where(filter_date).group(:date, songs: :id).to_sql
 
     render_table PER_DAY, Song.select("*").from("(#{songs}) AS songs")
   end

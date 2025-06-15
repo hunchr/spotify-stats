@@ -31,10 +31,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def date_range
-    params[:since]&.to_time..params[:until]&.to_date&.end_of_day
+  def filter_date
+    { plays: { created_at: params[:since]&.to_time..params[:until]&.to_date&.end_of_day } }
   rescue StandardError
-    ..nil
+    nil
   end
 
   def page_offset
