@@ -38,7 +38,7 @@ module ApplicationHelper
     dir = if params[:sort] == column_name
       params[:dir] == "asc" ? :desc : :asc
     else
-      DEFAULT_DIRS[column_name.to_sym]
+      COLUMNS[column_name][:dir]
     end
 
     url_for(**params.to_unsafe_h, sort: column_name, dir:)

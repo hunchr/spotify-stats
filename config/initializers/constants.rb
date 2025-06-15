@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
+COLUMNS = {
+  artist_name: { as: :string, dir: :asc },
+  date: { dir: :desc },
+  first_played_at: { dir: :asc },
+  last_played_at: { dir: :desc },
+  name: { as: :string, dir: :asc },
+  plays_count: { as: :number, dir: :desc },
+  plays_length: { dir: :desc },
+  title: { as: :string, dir: :asc },
+}.stringify_keys.freeze
 DIRS = %w[asc desc].freeze
-DEFAULT_DIRS = {
-  artist_name: :asc, date: :desc, first_played_at: :asc, last_played_at: :desc,
-  plays_count: :desc, plays_length: :desc, title: :asc
-}.freeze
 LIMIT = 200
+
+Rails.application.config.to_prepare do
+  Rails.application.config.x.date_range =
+    Range.new(*DIRS.map { Play.order(created_at: it).first.created_at })
+end

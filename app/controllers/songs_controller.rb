@@ -4,14 +4,16 @@ class SongsController < ApplicationController
   INDEX = %w[title artist_name plays_count plays_length first_played_at last_played_at].freeze
 
   def index
-    render_table INDEX, Song.joins(:artist, :plays)
+    songs = Song.joins(:artist, :plays)
       .select("songs.*, artists.name AS artist_name," \
               "COUNT(plays.id) AS plays_count," \
               "SUM(plays.ms_played) AS plays_length," \
               "MIN(plays.created_at) AS first_played_at," \
               "MAX(plays.created_at) AS last_played_at")
       .where(plays: { created_at: date_range })
-      .group(songs: :id)
+      .group(songs: :id).to_sql
+
+    render_table INDEX, Song.select("*").from("(#{songs}) AS songs")
   end
 
   ON_REPEAT = %w[title artist_name plays_count plays_length date].freeze
@@ -25,9 +27,7 @@ class SongsController < ApplicationController
       .where(plays: { created_at: date_range })
       .group(:date, songs: :id).to_sql
 
-    render_table ON_REPEAT, Song
-      .select("*").from("(#{songs}) AS songs")
-      .where(plays_count: 5..)
+    render_table ON_REPEAT, Song.select("*").from("(#{songs}) AS songs")
   end
 
   def show
@@ -47,15 +47,4 @@ class SongsController < ApplicationController
       .select("STRFTIME('#{fmt}', created_at) AS #{time}, COUNT(*) AS #{time}_count")
       .group(time).order("#{time}_count": :desc).limit(1).to_sql
   end
-
-  # def filter(attrs, songs)
-  #   if params[:q].present?
-  #     songs = songs.where "songs.name LIKE ?", "#{params[:q]}%"
-  #   end
-  #   if params[:artist_name].present?
-  #     songs = songs.where "artists.name LIKE ?", "#{params[:artist_name]}%"
-  #   end
-
-  #   sort_and_paginate attrs, songs
-  # end
 end

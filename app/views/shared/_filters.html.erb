@@ -1,21 +1,22 @@
-<%# locals: (filters:) %>
+<%# locals: (search_fields:) %>
 
 <%= form_with url: request.path, method: :get, class: :filters do |f| %>
-  <% %i[sort dir page].each do |param| %>
-    <%= f.hidden_field param, value: params[param] %>
-  <% end %>
+  <%= f.hidden_field :sort, value: params[:sort] %>
+  <%= f.hidden_field :dir, value: params[:dir] %>
 
-  <% %i[since until].each do |param| %>
-    <div>
-      <%= f.label param %>
-      <%= f.date_field param, value: params[param] %>
-    </div>
-  <% end %>
+  <div>
+    <%= f.label :since %>
+    <%= f.date_field :since, value: params[:since] || Rails.application.config.x.date_range.begin %>
+  </div>
+  <div>
+    <%= f.label :until %>
+    <%= f.date_field :until, value: params[:until] || Rails.application.config.x.date_range.end %>
+  </div>
 
-  <% filters.each do |param| %>
+  <% search_fields.each do |name| %>
     <div>
-      <%= f.label param %>
-      <%= f.text_field param, value: params[param] %>
+      <%= f.label name, t("columns.#{name}") %>
+      <%= f.text_field name, value: params[name] %>
     </div>
   <% end %>
 

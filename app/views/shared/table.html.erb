@@ -1,11 +1,12 @@
-<%# locals: (collection:) %>
+<%# locals: (collection:, column_names:, search_fields:) %>
+
+<%= render "shared/filters", search_fields: %>
 
 <table>
   <thead>
     <tr>
       <th><%= t "columns.index" %></th>
 
-      <% column_names = controller.class.const_get params[:action].upcase %>
       <% column_names.each do |column_name| %>
         <th><%= link_to t("columns.#{column_name}"), sort_path(column_name) %></th>
       <% end %>

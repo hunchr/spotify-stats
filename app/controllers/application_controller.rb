@@ -7,11 +7,28 @@ class ApplicationController < ActionController::Base
 
   def render_table(column_names, collection)
     column_name = column_names.include?(params[:sort]) ? params[:sort] : column_names.last
-    dir = DIRS.include?(params[:dir]) ? params[:dir] : DEFAULT_DIRS[column_name.to_sym]
+    dir = DIRS.include?(params[:dir]) ? params[:dir] : COLUMNS[column_name][:dir]
+    search_fields = filter! column_names, collection
 
-    render "shared/table", locals: {
-      collection: collection.order(column_name => dir).limit(LIMIT).offset(page_offset),
-    }
+    render "shared/table", locals: { column_names:, search_fields:, collection:
+      collection.order(column_name => dir).limit(LIMIT).offset(page_offset) }
+  end
+
+  def filter!(column_names, collection)
+    column_names.select do |column_name|
+      type = COLUMNS[column_name][:as]
+      next if type.nil?
+
+      value = params[column_name]
+      next true if value.blank?
+
+      if type == :string
+        collection.where! "#{column_name} LIKE ?", "#{value}%"
+      else
+        value = value.split("..", 2).map { it.presence&.to_i }
+        collection.where! column_name => value.length == 1 ? value[0] : Range.new(*value)
+      end
+    end
   end
 
   def date_range
