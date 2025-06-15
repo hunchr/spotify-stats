@@ -14,9 +14,10 @@
 <h2><%= t "labels.guide" %></h2>
 <%= render "table" do %>
   <tr><th><h3><%= t "labels.pages" %></h3></th></tr>
-  <tr><th><%= link_to artists_path, artists_path %></th><td><%= t "labels.list_of_artists" %></th></tr>
-  <tr><th><%= link_to songs_path, songs_path %></th><td><%= t "labels.list_of_songs" %></th></tr>
-  <tr><th><%= link_to per_day_songs_path, per_day_songs_path %></th><td><%= t "labels.list_of_songs_per_day" %></th></tr>
+  <tr><th><%= link_to artists_path, artists_path %></th><td><%= t "labels.artists" %></th></tr>
+  <tr><th><%= link_to streak_artists_path, streak_artists_path %></th><td><%= t "labels.artists_streak" %></th></tr>
+  <tr><th><%= link_to songs_path, songs_path %></th><td><%= t "labels.songs" %></th></tr>
+  <tr><th><%= link_to per_day_songs_path, per_day_songs_path %></th><td><%= t "labels.songs_per_day" %></th></tr>
   <tr><th><%= link_to new_import_path, new_import_path %></th><td><%= t "labels.import_streaming_history" %></th></tr>
 
   <tr><th><h3><%= t "labels.filtering" %></h3></th></tr>

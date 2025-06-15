@@ -16,6 +16,28 @@ class ArtistsController < ApplicationController
     render_table INDEX, Artist.select("*").from("(#{artists}) AS artists")
   end
 
+  STREAK = %w[name streak_length start_date end_date].freeze
+
+  def streak
+    artists = Artist.joins(:plays)
+      .select("artists.*, DATE(plays.created_at) AS listen_date")
+      .group(:listen_date, artists: :id).to_sql
+    artists = Artist
+      .select("*, ROW_NUMBER() OVER (PARTITION BY id ORDER BY listen_date) AS rn")
+      .from("(#{artists})").to_sql
+    artists = Artist
+      .select("*, DATE(listen_date, '-' || rn || ' days') AS streak")
+      .from("(#{artists})").to_sql
+    artists = Artist
+      .select("*, COUNT(*) AS streak_length," \
+              "MIN(listen_date) AS start_date," \
+              "MAX(listen_date) AS end_date")
+      .from("(#{artists})")
+      .group(:id, :streak).to_sql
+
+    render_table STREAK, Artist.select("*").from("(#{artists}) AS artists")
+  end
+
   def show
     @artist = Artist.find params[:id]
   end

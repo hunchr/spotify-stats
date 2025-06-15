@@ -2,12 +2,15 @@ en:
   columns:
     artist_name: Artist
     date: Date
+    end_date: End date
     first_played_at: First played
     index: "#"
     last_played_at: Last played
     name: Name
     plays_count: Plays
     plays_length: Duration
+    start_date: Start date
+    streak_length: Streak
     title: Title
 
   helpers:
@@ -23,14 +26,12 @@ en:
 
   labels:
     artists: Artists
+    artists_streak: Artists daily listening streak
     click_to_sort: Click on a column name to sort it, and again to reverse the order
     day: Day
     filtering: Filtering
     guide: Guide
     import_streaming_history: Import streaming history
-    list_of_artists: List of artists
-    list_of_songs: List of songs
-    list_of_songs_per_day: List of songs grouped by day
     month: Month
     number_between: Between 10 and 20
     number_exactly: Exactly 10
@@ -40,6 +41,7 @@ en:
     pages: Pages
     plays: Plays
     songs: Songs
+    songs_per_day: Songs grouped by day
     sorting: Sorting
     text: Text
     text_contains: Contains 'hello'
