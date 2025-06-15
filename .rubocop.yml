@@ -47,7 +47,7 @@ Layout/FirstMethodParameterLineBreak:
   Enabled: true
 
 Layout/LineLength:
-  Max: 80
+  Max: 100
 
 Layout/MultilineAssignmentLayout:
   Enabled: true

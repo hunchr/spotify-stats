@@ -1,19 +1,33 @@
 # frozen_string_literal: true
 
 class SongsController < ApplicationController
-  INDEX_HEADERS = %w[
-    name artist_name plays_count duration first_played_at last_played_at
-  ].freeze
+  INDEX = %w[title artist_name plays_count plays_length first_played_at last_played_at].freeze
 
   def index
-    @songs = filter INDEX_HEADERS, Song.joins(:artist, :plays)
-      .where(plays: { created_at: date_range })
+    render_table INDEX, Song.joins(:artist, :plays)
       .select("songs.*, artists.name AS artist_name," \
               "COUNT(plays.id) AS plays_count," \
-              "SUM(plays.ms_played) AS duration," \
+              "SUM(plays.ms_played) AS plays_length," \
               "MIN(plays.created_at) AS first_played_at," \
               "MAX(plays.created_at) AS last_played_at")
+      .where(plays: { created_at: date_range })
       .group(songs: :id)
+  end
+
+  ON_REPEAT = %w[title artist_name plays_count plays_length date].freeze
+
+  def on_repeat
+    songs = Song.joins(:artist, :plays)
+      .select("songs.*, artists.name AS artist_name," \
+              "COUNT(plays.id) AS plays_count," \
+              "SUM(plays.ms_played) AS plays_length," \
+              "DATE(plays.created_at) AS date")
+      .where(plays: { created_at: date_range })
+      .group(:date, songs: :id).to_sql
+
+    render_table ON_REPEAT, Song
+      .select("*").from("(#{songs}) AS songs")
+      .where(plays_count: 5..)
   end
 
   def show
@@ -26,35 +40,22 @@ class SongsController < ApplicationController
     ).first
   end
 
-  ON_REPEAT_HEADERS = %w[name artist_name plays_count date].freeze
-
-  def on_repeat
-    subquery = Play.joins(:song).where(created_at: date_range)
-      .select("songs.*, DATE(plays.created_at) AS date,COUNT(*) AS plays_count")
-      .group(:date, songs: :id).to_sql
-
-    @songs = filter ON_REPEAT_HEADERS,
-      Song.joins(:artist).select("songs.*, artists.name AS artist_name")
-        .from("(#{subquery}) AS songs").where(plays_count: 5..)
-  end
-
   private
 
   def most_plays_in(time, fmt)
     @song.plays
-      .select("STRFTIME('#{fmt}', created_at) AS #{time}," \
-              "COUNT(*) AS #{time}_count")
+      .select("STRFTIME('#{fmt}', created_at) AS #{time}, COUNT(*) AS #{time}_count")
       .group(time).order("#{time}_count": :desc).limit(1).to_sql
   end
 
-  def filter(attrs, songs)
-    if params[:q].present?
-      songs = songs.where "songs.name LIKE ?", "#{params[:q]}%"
-    end
-    if params[:artist_name].present?
-      songs = songs.where "artists.name LIKE ?", "#{params[:artist_name]}%"
-    end
+  # def filter(attrs, songs)
+  #   if params[:q].present?
+  #     songs = songs.where "songs.name LIKE ?", "#{params[:q]}%"
+  #   end
+  #   if params[:artist_name].present?
+  #     songs = songs.where "artists.name LIKE ?", "#{params[:artist_name]}%"
+  #   end
 
-    sort_and_paginate attrs, songs
-  end
+  #   sort_and_paginate attrs, songs
+  # end
 end

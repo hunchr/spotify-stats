@@ -1,0 +1,30 @@
+<%# locals: (collection:) %>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= t "columns.index" %></th>
+
+      <% column_names = controller.class.const_get params[:action].upcase %>
+      <% column_names.each do |column_name| %>
+        <th><%= link_to t("columns.#{column_name}"), sort_path(column_name) %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% collection.each_with_index do |resource, index| %>
+      <% if index == 179 %>
+        <tr data-controller="infinite-scroll" data-page="<%= params[:page].presence || 1 %>">
+      <% else %>
+        <tr>
+      <% end %>
+
+        <td><%= index.next + page_offset %></td>
+
+        <% column_names.each do |column_name| %>
+          <%= public_send "td_#{column_name}", resource %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,29 +1,22 @@
-<h1>
-  <%= link_to @song.artist.name, artist_path(@song.artist) %> -
-  <%= @song.name %>
-</h1>
+<h1><%= link_to @song.artist.name, artist_path(@song.artist) %> - <%= @song.title %></h1>
 
 <h2><%= t "stats.title" %></h2>
 <table>
   <tbody>
     <tr>
       <th><%= t "stats.total_plays" %></th>
-      <td class="text-right">
-        <%= t "stats.plays_count", count: @plays.length %>
-      </td>
+      <td class="text-right"><%= t "stats.plays_count", count: @plays.length %></td>
     </tr>
     <tr>
       <th><%= t "stats.total_duration" %></th>
-      <td class="text-right">
-        <%= format_duration_in_words @plays.sum(&:ms_played) %>
-      </td>
+      <td class="text-right"><%= duration_in_words @plays.sum(&:ms_played) %></td>
     </tr>
     <tr>
-      <th><%= t "labels.first_played_at" %></th>
+      <th><%= t "columns.first_played_at" %></th>
       <td class="text-right"><%= format_date @plays.first.created_at %></td>
     </tr>
     <tr>
-      <th><%= t "labels.last_played_at" %></th>
+      <th><%= t "columns.last_played_at" %></th>
       <td class="text-right"><%= format_date @plays.last.created_at %></td>
     </tr>
   </tbody>
@@ -34,24 +27,20 @@
   <tbody>
     <% ApplicationHelper::DATE_FORMAT.each do |time, format| %>
       <tr>
-        <th><%= t "labels.#{time}" %></th>
-        <td class="text-right">
-          <%= @most_plays[time].to_date.strftime format %>
-        </td>
-        <td class="text-right">
-          <%= t "stats.plays_count", count: @most_plays["#{time}_count"] %>
-        </td>
+        <th><%= t "titles.#{time}" %></th>
+        <td class="text-right"><%= @most_plays[time].to_date.strftime format %></td>
+        <td class="text-right"><%= t "stats.plays_count", count: @most_plays["#{time}_count"] %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<h2><%= t "labels.plays" %></h2>
+<h2><%= t "titles.plays" %></h2>
 <table>
   <thead>
     <tr>
-      <% %w[number date duration].each do |attr| %>
-        <th><%= t "labels.#{attr}" %></th>
+      <% %w[index date plays_length].each do |attr| %>
+        <th><%= t "columns.#{attr}" %></th>
       <% end %>
     </tr>
   </thead>

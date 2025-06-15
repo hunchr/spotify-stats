@@ -17,7 +17,7 @@ class CreateModels < ActiveRecord::Migration[8.0]
 
   def create_songs
     create_table :songs do |t|
-      t.string :name, null: false, index: true
+      t.string :title, null: false, index: true
       t.references :artist, null: false, foreign_key: true
     end
   end

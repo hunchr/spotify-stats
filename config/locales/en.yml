@@ -1,4 +1,15 @@
 en:
+  columns:
+    artist_name: Artist
+    date: Date
+    first_played_at: First played
+    index: "#"
+    last_played_at: Last played
+    name: Name
+    plays_count: Plays
+    plays_length: Duration
+    title: Title
+
   helpers:
     button:
       import: Import
@@ -10,26 +21,18 @@ en:
       since: From
       until: To
 
-  labels:
-    artist_name: Artist
-    artists: Artists
-    date: Date
-    day: Day
-    duration: Duration
-    first_played_at: First played
-    last_played_at: Last played
-    month: Month
-    name: Name
-    number: "#"
-    pages: Pages
-    plays: Plays
-    plays_count: Plays
-    songs: Songs
-    year: Year
-
   stats:
     most_plays_in: Most plays in a
     plays_count: "%{count} plays"
     title: Stats
     total_duration: Total duration
     total_plays: Total plays
+
+  titles:
+    artists: Artists
+    day: Day
+    month: Month
+    pages: Pages
+    plays: Plays
+    songs: Songs
+    year: Year

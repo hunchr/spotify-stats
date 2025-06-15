@@ -1,23 +1,17 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  DIRS = %w[asc desc].freeze
-  DEFAULT_DIR = {
-    "name" => "asc", "artist_name" => "asc", "plays_count" => "desc",
-    "duration" => "desc", "first_played_at" => "asc",
-    "last_played_at" => "desc", "date" => "desc"
-  }.freeze
-  LIMIT = 200
-
   helper_method :page_offset
 
   private
 
-  def sort_and_paginate(attrs, collection)
-    sort = attrs.include?(params[:sort]) ? params[:sort] : attrs.last
-    dir = DIRS.include?(params[:dir]) ? params[:dir] : DEFAULT_DIR[sort]
+  def render_table(column_names, collection)
+    column_name = column_names.include?(params[:sort]) ? params[:sort] : column_names.last
+    dir = DIRS.include?(params[:dir]) ? params[:dir] : DEFAULT_DIRS[column_name.to_sym]
 
-    collection.order(sort => dir).limit(LIMIT).offset page_offset
+    render "shared/table", locals: {
+      collection: collection.order(column_name => dir).limit(LIMIT).offset(page_offset),
+    }
   end
 
   def date_range

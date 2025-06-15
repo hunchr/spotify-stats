@@ -31,9 +31,9 @@ class ImportsController < ApplicationController
     artist_ids = insert_all! Artist, (@data.keys.compact.map { { name: it } })
     song_plays = []
     song_ids = insert_all! Song, (@data.values.each_with_index.map do |songs, i|
-      songs.map do |name, plays|
+      songs.map do |title, plays|
         song_plays << plays.map { { ms_played: it[0], created_at: it[1] } }
-        { name:, artist_id: artist_ids[i] }
+        { title:, artist_id: artist_ids[i] }
       end
     end)
 

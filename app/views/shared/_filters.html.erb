@@ -1,4 +1,6 @@
-<%= form_with url: request.path, method: :get, class: "filters" do |f| %>
+<%# locals: (filters:) %>
+
+<%= form_with url: request.path, method: :get, class: :filters do |f| %>
   <% %i[sort dir page].each do |param| %>
     <%= f.hidden_field param, value: params[param] %>
   <% end %>
@@ -10,7 +12,7 @@
     </div>
   <% end %>
 
-  <% search_params.each do |param| %>
+  <% filters.each do |param| %>
     <div>
       <%= f.label param %>
       <%= f.text_field param, value: params[param] %>

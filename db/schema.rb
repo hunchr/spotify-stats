@@ -25,10 +25,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_01_000000) do
   end
 
   create_table "songs", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "title", null: false
     t.integer "artist_id", null: false
     t.index ["artist_id"], name: "index_songs_on_artist_id"
-    t.index ["name"], name: "index_songs_on_name"
+    t.index ["title"], name: "index_songs_on_title"
   end
 
   add_foreign_key "plays", "songs"
