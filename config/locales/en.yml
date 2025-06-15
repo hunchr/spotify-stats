@@ -21,18 +21,35 @@ en:
       since: From
       until: To
 
+  labels:
+    artists: Artists
+    click_to_sort: Click on a column name to sort it, and again to reverse the order
+    day: Day
+    filtering: Filtering
+    guide: Guide
+    import_streaming_history: Import streaming history
+    list_of_artists: List of artists
+    list_of_songs: List of songs
+    list_of_songs_per_day: List of songs grouped by day
+    month: Month
+    number_between: Between 10 and 20
+    number_exactly: Exactly 10
+    number_less_than_or_equal: Less than or equal to 10
+    number_more_than_or_equal: More than or equal to 10
+    numbers: Numbers
+    pages: Pages
+    plays: Plays
+    songs: Songs
+    sorting: Sorting
+    text: Text
+    text_contains: Contains 'hello'
+    text_starts_with: Starts with 'hello'
+    total: Total
+    year: Year
+
   stats:
     most_plays_in: Most plays in a
     plays_count: "%{count} plays"
     title: Stats
     total_duration: Total duration
     total_plays: Total plays
-
-  titles:
-    artists: Artists
-    day: Day
-    month: Month
-    pages: Pages
-    plays: Plays
-    songs: Songs
-    year: Year

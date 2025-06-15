@@ -27,7 +27,7 @@
   <tbody>
     <% ApplicationHelper::DATE_FORMAT.each do |time, format| %>
       <tr>
-        <th><%= t "titles.#{time}" %></th>
+        <th><%= t "labels.#{time}" %></th>
         <td class="text-right"><%= @most_plays[time].to_date.strftime format %></td>
         <td class="text-right"><%= t "stats.plays_count", count: @most_plays["#{time}_count"] %></td>
       </tr>
@@ -35,7 +35,7 @@
   </tbody>
 </table>
 
-<h2><%= t "titles.plays" %></h2>
+<h2><%= t "labels.plays" %></h2>
 <table>
   <thead>
     <tr>

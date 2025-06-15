@@ -1,30 +1,34 @@
 <h1><%= t "stats.title" %></h1>
-<table>
-  <tbody>
-    <tr>
-      <th><%= t "titles.artists" %></th>
-      <td class="text-right"><%= Artist.count %></td>
-    </tr>
-    <tr>
-      <th><%= t "titles.songs" %></th>
-      <td class="text-right"><%= Song.count %></td>
-    </tr>
-    <tr>
-      <th><%= t "titles.plays" %></th>
-      <td class="text-right"><%= @plays_count %></td>
-    </tr>
-    <tr>
-      <th><%= t "columns.plays_length" %></th>
-      <td class="text-right"><%= duration_in_words Play.sum :ms_played %></td>
-    </tr>
-  </tbody>
-</table>
 
-<h2><%= t "titles.pages" %></h2>
-<table>
-  <tbody>
-    <% @paths.each do |path| %>
-      <tr><td><%= link_to path, path %></td></tr>
-    <% end %>
-  </tbody>
-</table>
+<h2><%= t "labels.total" %></h2>
+<%= render "table" do %>
+  <tr><th><%= t "labels.artists" %></th><td class="text-right"><%= Artist.count %></td></tr>
+  <tr><th><%= t "labels.songs" %></th><td class="text-right"><%= Song.count %></td></tr>
+  <tr><th><%= t "labels.plays" %></th><td class="text-right"><%= @plays_count %></td></tr>
+  <tr>
+    <th><%= t "columns.plays_length" %></th>
+    <td class="text-right"><%= duration_in_words Play.sum :ms_played %></td>
+  </tr>
+<% end %>
+
+<h2><%= t "labels.guide" %></h2>
+<%= render "table" do %>
+  <tr><th><h3><%= t "labels.pages" %></h3></th></tr>
+  <tr><th><%= link_to artists_path, artists_path %></th><td><%= t "labels.list_of_artists" %></th></tr>
+  <tr><th><%= link_to songs_path, songs_path %></th><td><%= t "labels.list_of_songs" %></th></tr>
+  <tr><th><%= link_to per_day_songs_path, per_day_songs_path %></th><td><%= t "labels.list_of_songs_per_day" %></th></tr>
+  <tr><th><%= link_to new_import_path, new_import_path %></th><td><%= t "labels.import_streaming_history" %></th></tr>
+
+  <tr><th><h3><%= t "labels.filtering" %></h3></th></tr>
+  <tr><th><h4><%= t "labels.text" %></h4></th></tr>
+  <tr><th>hello</th><td><%= t "labels.text_starts_with" %></td></tr>
+  <tr><th>%hello</th><td><%= t "labels.text_contains" %></td></tr>
+  <tr><th><h4><%= t "labels.numbers" %></h4></th></tr>
+  <tr><th>..10</th><td><%= t "labels.number_less_than_or_equal" %></td></tr>
+  <tr><th>10</th><td><%= t "labels.number_exactly" %></td></tr>
+  <tr><th>10..</th><td><%= t "labels.number_more_than_or_equal" %></td></tr>
+  <tr><th>10..20</th><td><%= t "labels.number_between" %></td></tr>
+
+  <tr><th><h3><%= t "labels.sorting" %></h3></th></tr>
+  <tr><th>asc/desc</th><td><%= t "labels.click_to_sort" %></td></tr>
+<% end %>

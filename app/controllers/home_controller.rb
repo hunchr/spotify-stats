@@ -3,8 +3,6 @@
 class HomeController < ApplicationController
   def show
     @plays_count = Play.count
-    return redirect_to new_import_path if @plays_count.zero?
-
-    @paths = [artists_path, songs_path, per_day_songs_path, new_import_path]
+    redirect_to new_import_path if @plays_count.zero?
   end
 end
