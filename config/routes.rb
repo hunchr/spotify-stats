@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   resources :artists, only: %i[index show]
   resources :imports, only: %i[new create]
   resources :songs, only: %i[index show] do
-    get :on_repeat, on: :collection
+    get :per_day, on: :collection
   end
 end

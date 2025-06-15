@@ -16,9 +16,9 @@ class SongsController < ApplicationController
     render_table INDEX, Song.select("*").from("(#{songs}) AS songs")
   end
 
-  ON_REPEAT = %w[title artist_name plays_count plays_length date].freeze
+  PER_DAY = %w[title artist_name plays_count plays_length date].freeze
 
-  def on_repeat
+  def per_day
     songs = Song.joins(:artist, :plays)
       .select("songs.*, artists.name AS artist_name," \
               "COUNT(plays.id) AS plays_count," \
@@ -27,7 +27,7 @@ class SongsController < ApplicationController
       .where(plays: { created_at: date_range })
       .group(:date, songs: :id).to_sql
 
-    render_table ON_REPEAT, Song.select("*").from("(#{songs}) AS songs")
+    render_table PER_DAY, Song.select("*").from("(#{songs}) AS songs")
   end
 
   def show
