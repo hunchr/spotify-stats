@@ -1,4 +1,4 @@
-/assets/public
 /log
 /storage
 /tmp
+/.env

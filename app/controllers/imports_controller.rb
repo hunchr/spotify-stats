@@ -28,7 +28,7 @@ class ImportsController < ApplicationController
   end
 
   def insert_data!
-    artist_ids = insert_all! Artist, (@data.keys.compact.map { { name: it } })
+    artist_ids = insert_all!(Artist, @data.keys.compact.map { { name: it } })
     song_plays = []
     song_ids = insert_all! Song, (@data.values.each_with_index.map do |songs, i|
       songs.map do |title, plays|
@@ -37,7 +37,7 @@ class ImportsController < ApplicationController
       end
     end)
 
-    insert_all! Play, (song_plays.each_with_index
+    insert_all!(Play, song_plays.each_with_index
       .map { |plays, i| plays.map { { **it, song_id: song_ids[i] } } })
   end
 

@@ -13,10 +13,14 @@ COLUMNS = {
   streak_length: { as: :number, dir: :desc },
   title: { as: :string, dir: :asc },
 }.stringify_keys.freeze
+
 DIRS = %w[asc desc].freeze
 LIMIT = 200
 
-Rails.application.config.to_prepare do
-  Rails.application.config.x.date_range =
-    Range.new(*DIRS.map { Play.order(created_at: it).first.created_at })
+Rails.application.config.after_initialize do
+  Rails.application.config.x.date_range = begin
+    Range.new(*DIRS.map { Play.order(created_at: it).first&.created_at })
+  rescue ActiveRecord::StatementInvalid
+    nil..nil
+  end
 end

@@ -6,6 +6,7 @@ ruby file: ".ruby-version"
 
 gem "rails", "~> 8.0.0"
 
+gem "dotenv-rails"
 gem "importmap-rails"
 gem "propshaft"
 gem "puma", require: false
