@@ -1,3 +1,7 @@
+<% if @api_data %>
+  <%= image_tag @api_data["album"]["images"][1]["url"], alt: t("labels.cover"), width: 160 %>
+<% end %>
+
 <table>
   <tbody>
     <tr>
@@ -8,6 +12,16 @@
       <th><%= t "columns.title" %></th>
       <td><%= @song.title %></td>
     </tr>
+    <% if @api_data %>
+      <tr>
+        <th><%= t "labels.release_date" %></th>
+        <td><%= @api_data.dig "album", "release_date" %></td>
+      </tr>
+      <tr>
+        <th><%= t "labels.popularity" %></th>
+        <td><%= @api_data["popularity"] %>%</td>
+      </tr>
+    <% end %>
     <tr>
       <th><%= t "labels.uri" %></th>
       <td><%= link_to @song.uri, @song.url, rel: :noopener, target: :_blank %></td>

@@ -3,6 +3,23 @@
 class ApplicationController < ActionController::Base
   helper_method :page_offset
 
+  def spotify
+    @spotify ||= if Spotify.client_id.blank?
+      nil
+    else
+      auth = session[:auth]
+
+      if auth.nil?
+        redirect_to Spotify.authorize_url(%w[user-library-read]), allow_other_host: true
+        return
+      elsif auth["expires_in"] < Time.zone.now.to_i
+        auth = session[:auth] = Spotify.refresh_session auth["refresh_token"]
+      end
+
+      @spotify ||= Spotify.new auth["access_token"]
+    end
+  end
+
   private
 
   def render_table(column_names, collection)

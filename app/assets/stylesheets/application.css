@@ -26,16 +26,24 @@ a {
   text-decoration: none;
 }
 
+img,
+td,
+th {
+  padding: 0.125rem 1rem;
+}
+
+img {
+  width: 10rem;
+}
+
 td {
   max-width: 16rem;
   overflow: hidden;
-  padding: 0.125rem 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 th {
-  padding: 0.125rem 1rem;
   text-align: left;
   white-space: nowrap;
 }

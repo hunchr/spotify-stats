@@ -28,6 +28,7 @@ en:
     artists: Artists
     artists_streak: Artists daily listening streak
     click_to_sort: Click on a column name to sort it, and again to reverse the order
+    cover: Cover
     day: Day
     filtering: Filtering
     guide: Guide
@@ -40,6 +41,8 @@ en:
     numbers: Numbers
     pages: Pages
     plays: Plays
+    popularity: Popularity
+    release_date: Release date
     songs: Songs
     songs_per_day: Songs grouped by day
     sorting: Sorting
