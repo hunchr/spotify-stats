@@ -19,8 +19,8 @@ class ImportsController < ApplicationController
     return if entry["incognito_mode"] || entry["spotify_track_uri"].nil?
 
     ((@data[entry["master_metadata_album_artist_name"]] ||= {})[
-      entry["master_metadata_track_name"]] ||= []) <<
-      [entry["ms_played"], entry["ts"]]
+      [entry["spotify_track_uri"][14..], entry["master_metadata_track_name"]],
+    ] ||= []) << [entry["ms_played"], entry["ts"]]
   end
 
   def insert_all!(model, values)
@@ -31,9 +31,10 @@ class ImportsController < ApplicationController
     artist_ids = insert_all!(Artist, @data.keys.compact.map { { name: it } })
     song_plays = []
     song_ids = insert_all! Song, (@data.values.each_with_index.map do |songs, i|
-      songs.map do |title, plays|
+      songs.map do |key, plays|
+        uri, title = key
         song_plays << plays.map { { ms_played: it[0], created_at: it[1] } }
-        { title:, artist_id: artist_ids[i] }
+        { uri:, title:, artist_id: artist_ids[i] }
       end
     end)
 

@@ -1,4 +1,19 @@
-<h1><%= link_to @song.artist.name, artist_path(@song.artist) %> - <%= @song.title %></h1>
+<table>
+  <tbody>
+    <tr>
+      <th><%= t "columns.artist_name" %></th>
+      <td><%= link_to @song.artist.name, artist_path(@song.artist) %></td>
+    </tr>
+    <tr>
+      <th><%= t "columns.title" %></th>
+      <td><%= @song.title %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.uri" %></th>
+      <td><%= link_to @song.uri, @song.url, rel: :noopener, target: :_blank %></td>
+    </tr>
+  </tbody>
+</table>
 
 <h2><%= t "stats.title" %></h2>
 <table>

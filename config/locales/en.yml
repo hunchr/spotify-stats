@@ -47,6 +47,7 @@ en:
     text_contains: Contains 'hello'
     text_starts_with: Starts with 'hello'
     total: Total
+    uri: ID
     year: Year
 
   stats:

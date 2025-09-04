@@ -25,6 +25,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_01_000000) do
   end
 
   create_table "songs", force: :cascade do |t|
+    t.string "uri", null: false
     t.string "title", null: false
     t.integer "artist_id", null: false
     t.index ["artist_id"], name: "index_songs_on_artist_id"
