@@ -28,6 +28,41 @@
   </tr>
 <% end %>
 
+<% if @vocadb_info %>
+  <h2><%= t "labels.vocadb" %></h2>
+  <%= render "shared/table" do %>
+    <tr>
+      <th><%= t "columns.artist_name" %></th>
+      <td><%= @vocadb_info["artistString"] %></td>
+    </tr>
+    <tr>
+      <th><%= t "columns.title" %></th>
+      <td><%= @vocadb_info["defaultName"] %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.release_date" %></th>
+      <td><%= @vocadb_info["publishDate"].to_date %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.popularity" %></th>
+      <td><%= @vocadb_info["ratingScore"] %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.genres" %></th>
+      <td><%= @vocadb_info["genres"].to_sentence %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.themes" %></th>
+      <td><%= @vocadb_info["themes"].to_sentence %></td>
+    </tr>
+    <tr>
+      <th><%= t "labels.uri" %></th>
+      <td><%= link_to @vocadb_info["id"], "https://vocadb.net/S/#{@vocadb_info["id"]}",
+                rel: :noopener, target: :_blank %></td>
+    </tr>
+  <% end %>
+<% end %>
+
 <h2><%= t "stats.title" %></h2>
 <%= render "shared/table" do %>
   <tr>

@@ -37,6 +37,7 @@ class SongsController < ApplicationController
       "CROSS JOIN (#{most_plays_in "year", "%Y-01-01"})",
     ).first
     @spotify_info = spotify.get_song @song.uri
+    @vocadb_info = VocaDB.get_song @song.title
   end
 
   private

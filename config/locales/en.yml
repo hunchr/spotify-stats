@@ -31,6 +31,7 @@ en:
     cover: Cover
     day: Day
     filtering: Filtering
+    genres: Genres
     guide: Guide
     import_streaming_history: Import streaming history
     month: Month
@@ -49,8 +50,10 @@ en:
     text: Text
     text_contains: Contains 'hello'
     text_starts_with: Starts with 'hello'
+    themes: Themes
     total: Total
     uri: ID
+    vocadb: VocaDB
     year: Year
 
   stats:
