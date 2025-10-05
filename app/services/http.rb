@@ -2,7 +2,7 @@
 
 class Http
   class << self
-    def url(url, params)
+    def uri(url, params)
       uri = URI url
       uri.query = params.map do |key, value|
         "#{key}=#{value.is_a?(Array) ? value.join(",") : value}"
@@ -10,7 +10,7 @@ class Http
       uri
     end
 
-    def get(uri, headers)
+    def get(uri, headers = {})
       cached = ApiLogs.find_by method: "GET", url: uri.to_s, response_code: 200
       JSON.parse cached&.response_body || request(:Get, uri, headers)
     end

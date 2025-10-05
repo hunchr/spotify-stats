@@ -5,8 +5,4 @@ class Song < ApplicationRecord
   has_many :plays, dependent: :destroy
 
   validates :uri, :title, presence: true
-
-  def url
-    "https://open.spotify.com/track/#{uri}"
-  end
 end

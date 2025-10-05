@@ -14,7 +14,7 @@ class Spotify
     end
 
     def authorize_url(scopes)
-      Http.url "https://accounts.spotify.com/authorize",
+      Http.uri "https://accounts.spotify.com/authorize",
         client_id:, redirect_uri:, response_type: :code,
         scope: scopes.join("%20"), state: SecureRandom.hex(8)
     end
@@ -37,7 +37,7 @@ class Spotify
     private
 
     def get_token(params)
-      res = Http.post Http.url("https://accounts.spotify.com/api/token", params),
+      res = Http.post Http.uri("https://accounts.spotify.com/api/token", params),
         authorization: "Basic #{Base64.strict_encode64 "#{client_id}:#{client_secret}"}"
 
       {

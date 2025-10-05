@@ -1,7 +1,7 @@
 <h1><%= t "stats.title" %></h1>
 
 <h2><%= t "labels.total" %></h2>
-<%= render "table" do %>
+<%= render "shared/table" do %>
   <tr><th><%= t "labels.artists" %></th><td class="text-right"><%= Artist.count %></td></tr>
   <tr><th><%= t "labels.songs" %></th><td class="text-right"><%= Song.count %></td></tr>
   <tr><th><%= t "labels.plays" %></th><td class="text-right"><%= @plays_count %></td></tr>
@@ -12,7 +12,7 @@
 <% end %>
 
 <h2><%= t "labels.guide" %></h2>
-<%= render "table" do %>
+<%= render "shared/table" do %>
   <tr><th><h3><%= t "labels.pages" %></h3></th></tr>
   <tr><th><%= link_to artists_path, artists_path %></th><td><%= t "labels.artists" %></th></tr>
   <tr><th><%= link_to streak_artists_path, streak_artists_path %></th><td><%= t "labels.artists_streak" %></th></tr>

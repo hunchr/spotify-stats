@@ -2,67 +2,62 @@
   <%= image_tag @spotify_info["album"]["images"][1]["url"], alt: t("labels.cover"), width: 160 %>
 <% end %>
 
-<table>
-  <tbody>
+<%= render "shared/table" do %>
+  <tr>
+    <th><%= t "columns.artist_name" %></th>
+    <td><%= link_to @song.artist.name, artist_path(@song.artist) %></td>
+  </tr>
+  <tr>
+    <th><%= t "columns.title" %></th>
+    <td><%= @song.title %></td>
+  </tr>
+  <% if @spotify_info %>
     <tr>
-      <th><%= t "columns.artist_name" %></th>
-      <td><%= link_to @song.artist.name, artist_path(@song.artist) %></td>
+      <th><%= t "labels.release_date" %></th>
+      <td><%= @spotify_info.dig "album", "release_date" %></td>
     </tr>
     <tr>
-      <th><%= t "columns.title" %></th>
-      <td><%= @song.title %></td>
+      <th><%= t "labels.popularity" %></th>
+      <td><%= @spotify_info["popularity"] %>%</td>
     </tr>
-    <% if @spotify_info %>
-      <tr>
-        <th><%= t "labels.release_date" %></th>
-        <td><%= @spotify_info.dig "album", "release_date" %></td>
-      </tr>
-      <tr>
-        <th><%= t "labels.popularity" %></th>
-        <td><%= @spotify_info["popularity"] %>%</td>
-      </tr>
-    <% end %>
-    <tr>
-      <th><%= t "labels.uri" %></th>
-      <td><%= link_to @song.uri, @song.url, rel: :noopener, target: :_blank %></td>
-    </tr>
-  </tbody>
-</table>
+  <% end %>
+  <tr>
+    <th><%= t "labels.uri" %></th>
+    <td><%= link_to @song.uri, "https://open.spotify.com/track/#{@song.uri}",
+              rel: :noopener, target: :_blank %></td>
+  </tr>
+<% end %>
 
 <h2><%= t "stats.title" %></h2>
-<table>
-  <tbody>
-    <tr>
-      <th><%= t "stats.total_plays" %></th>
-      <td class="text-right"><%= t "stats.plays_count", count: @plays.length %></td>
-    </tr>
-    <tr>
-      <th><%= t "stats.total_duration" %></th>
-      <td class="text-right"><%= duration_in_words @plays.sum(&:ms_played) %></td>
-    </tr>
-    <tr>
-      <th><%= t "columns.first_played_at" %></th>
-      <td class="text-right"><%= format_date @plays.first.created_at %></td>
-    </tr>
-    <tr>
-      <th><%= t "columns.last_played_at" %></th>
-      <td class="text-right"><%= format_date @plays.last.created_at %></td>
-    </tr>
-  </tbody>
-</table>
+<%= render "shared/table" do %>
+  <tr>
+    <th><%= t "stats.total_plays" %></th>
+    <td class="text-right"><%= t "stats.plays_count", count: @plays.length %></td>
+  </tr>
+  <tr>
+    <th><%= t "stats.total_duration" %></th>
+    <td class="text-right"><%= duration_in_words @plays.sum(&:ms_played) %></td>
+  </tr>
+  <tr>
+    <th><%= t "columns.first_played_at" %></th>
+    <td class="text-right"><%= format_date @plays.first.created_at %></td>
+  </tr>
+  <tr>
+    <th><%= t "columns.last_played_at" %></th>
+    <td class="text-right"><%= format_date @plays.last.created_at %></td>
+  </tr>
+<% end %>
 
 <h2><%= t "stats.most_plays_in" %></h2>
-<table>
-  <tbody>
-    <% ApplicationHelper::DATE_FORMAT.each do |time, format| %>
-      <tr>
-        <th><%= t "labels.#{time}" %></th>
-        <td class="text-right"><%= @most_plays[time].to_date.strftime format %></td>
-        <td class="text-right"><%= t "stats.plays_count", count: @most_plays["#{time}_count"] %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render "shared/table" do %>
+  <% ApplicationHelper::DATE_FORMAT.each do |time, format| %>
+    <tr>
+      <th><%= t "labels.#{time}" %></th>
+      <td class="text-right"><%= @most_plays[time].to_date.strftime format %></td>
+      <td class="text-right"><%= t "stats.plays_count", count: @most_plays["#{time}_count"] %></td>
+    </tr>
+  <% end %>
+<% end %>
 
 <h2><%= t "labels.plays" %></h2>
 <table>
