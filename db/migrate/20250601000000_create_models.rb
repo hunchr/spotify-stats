@@ -2,12 +2,23 @@
 
 class CreateModels < ActiveRecord::Migration[8.0]
   def change
+    create_api_logs
     create_artists
     create_songs
     create_plays
   end
 
   private
+
+  def create_api_logs
+    create_table :api_logs do |t|
+      t.string :method, null: false
+      t.string :url, null: false
+      t.integer :response_code
+      t.text :response_body
+      t.datetime :created_at, null: false, precision: 0
+    end
+  end
 
   def create_artists
     create_table :artists do |t|

@@ -11,6 +11,14 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_06_01_000000) do
+  create_table "api_logs", force: :cascade do |t|
+    t.string "method", null: false
+    t.string "url", null: false
+    t.integer "response_code"
+    t.text "response_body"
+    t.datetime "created_at", precision: 0, null: false
+  end
+
   create_table "artists", force: :cascade do |t|
     t.string "name", null: false
     t.index ["name"], name: "index_artists_on_name", unique: true

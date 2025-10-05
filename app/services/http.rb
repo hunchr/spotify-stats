@@ -2,8 +2,8 @@
 
 class Http
   class << self
-    def url(uri, params)
-      uri = URI uri
+    def url(url, params)
+      uri = URI url
       uri.query = params.map do |key, value|
         "#{key}=#{value.is_a?(Array) ? value.join(",") : value}"
       end.join "&"
@@ -11,11 +11,12 @@ class Http
     end
 
     def get(uri, headers)
-      request :Get, uri, headers
+      cached = ApiLogs.find_by method: "GET", url: uri.to_s, response_code: 200
+      JSON.parse(cached&.response_body || request(:Get, uri, headers))
     end
 
     def post(uri, headers)
-      request :Post, uri, headers
+      JSON.parse request :Post, uri, headers
     end
 
     private
@@ -27,8 +28,14 @@ class Http
       response = http.request request
       body = response.body.force_encoding Encoding::UTF_8
 
-      body = JSON.parse body
-      response.error! unless response.code == "200"
+      ApiLogs.create! method: method.to_s.upcase, url: uri.to_s,
+        response_code: response.code, response_body: body
+
+      unless response.code == "200"
+        Rails.logger.debug response
+        response.error!
+      end
+
       body
     end
   end
