@@ -1,5 +1,5 @@
-<% if @api_data %>
-  <%= image_tag @api_data["album"]["images"][1]["url"], alt: t("labels.cover"), width: 160 %>
+<% if @spotify_info %>
+  <%= image_tag @spotify_info["album"]["images"][1]["url"], alt: t("labels.cover"), width: 160 %>
 <% end %>
 
 <table>
@@ -12,14 +12,14 @@
       <th><%= t "columns.title" %></th>
       <td><%= @song.title %></td>
     </tr>
-    <% if @api_data %>
+    <% if @spotify_info %>
       <tr>
         <th><%= t "labels.release_date" %></th>
-        <td><%= @api_data.dig "album", "release_date" %></td>
+        <td><%= @spotify_info.dig "album", "release_date" %></td>
       </tr>
       <tr>
         <th><%= t "labels.popularity" %></th>
-        <td><%= @api_data["popularity"] %>%</td>
+        <td><%= @spotify_info["popularity"] %>%</td>
       </tr>
     <% end %>
     <tr>

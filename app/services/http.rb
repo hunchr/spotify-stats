@@ -12,7 +12,7 @@ class Http
 
     def get(uri, headers)
       cached = ApiLogs.find_by method: "GET", url: uri.to_s, response_code: 200
-      JSON.parse(cached&.response_body || request(:Get, uri, headers))
+      JSON.parse cached&.response_body || request(:Get, uri, headers)
     end
 
     def post(uri, headers)

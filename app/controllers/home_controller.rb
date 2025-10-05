@@ -13,7 +13,7 @@ class HomeController < ApplicationController
   def authorize
     return if params[:code].blank?
 
-    session[:auth] = Spotify.authorize params[:code]
+    session[:spotify_auth] = Spotify.authorize params[:code]
     redirect_to root_url
   end
 end

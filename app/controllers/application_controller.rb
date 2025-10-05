@@ -3,20 +3,12 @@
 class ApplicationController < ActionController::Base
   helper_method :page_offset
 
+  SPOTIFY_SCOPES = %w[user-library-read user-follow-read].freeze
+
   def spotify
-    @spotify ||= if Spotify.client_id.blank?
-      nil
-    else
-      auth = session[:auth]
-
-      if auth.nil?
-        redirect_to Spotify.authorize_url(%w[user-library-read]), allow_other_host: true
-        return
-      elsif auth["expires_in"] < Time.zone.now.to_i
-        auth = session[:auth] = Spotify.refresh_session auth["refresh_token"]
-      end
-
-      @spotify ||= Spotify.new auth["access_token"]
+    Spotify.connect session[:spotify_auth], SPOTIFY_SCOPES do |refreshed_auth, url|
+      session[:spotify_auth] = refreshed_auth
+      redirect_to url, allow_other_host: true if url
     end
   end
 
