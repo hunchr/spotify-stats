@@ -12,7 +12,7 @@
 1. Install [Ruby](https://www.ruby-lang.org/en/downloads/)
 2. Clone this repo and cd into it
 3. Run `bin/setup` to install dependencies and set up the SQLite database
-4. Start the Rails server with `bin/rails s`
+4. Start the Rails server with `bin/dev`
 
 ## Connect to Spotify API (optional)
 
