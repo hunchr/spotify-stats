@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Rails/SkipsModelValidations
 class ImportsController < ApplicationController
   def create
     history = params["history"]
@@ -46,3 +47,4 @@ class ImportsController < ApplicationController
     Play.where(ms_played: ...1000).delete_all
   end
 end
+# rubocop:enable Rails/SkipsModelValidations

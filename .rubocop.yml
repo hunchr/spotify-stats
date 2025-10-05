@@ -1,5 +1,6 @@
 plugins:
   - rubocop-performance
+  - rubocop-rails
 
 AllCops:
   Exclude:
@@ -95,6 +96,46 @@ Performance/IoReadlines:
 
 Performance/SelectMap:
   Enabled: true
+
+Rails/CreateTableWithTimestamps:
+  Enabled: false
+
+Rails/Date:
+  EnforcedStyle: strict
+
+Rails/NotNullColumn:
+  Enabled: false
+
+Rails/PluckInWhere:
+  EnforcedStyle: aggressive
+
+Rails/RakeEnvironment:
+  Enabled: false
+
+Rails/RequireDependency:
+  Enabled: true
+
+Rails/ReversibleMigrationMethodDefinition:
+  Enabled: true
+
+Rails/SafeNavigation:
+  ConvertTry: true
+
+Rails/ShortI18n:
+  EnforcedStyle: aggressive
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - db/migrate/**/*
+
+Rails/TableNameAssignment:
+  Enabled: true
+
+Rails/TimeZone:
+  EnforcedStyle: strict
+
+Rails/UniqBeforePluck:
+  EnforcedStyle: aggressive
 
 Style/AndOr:
   EnforcedStyle: always
