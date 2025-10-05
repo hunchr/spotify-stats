@@ -7,7 +7,7 @@
   <tr><th><%= t :plays %></th><td class="text-right"><%= @plays_count %></td></tr>
   <tr>
     <th><%= t :duration %></th>
-    <td class="text-right"><%= duration_in_words Play.sum :ms_played %></td>
+    <td class="text-right"><%= duration_in_words SongPlay.sum :ms_played %></td>
   </tr>
 <% end %>
 

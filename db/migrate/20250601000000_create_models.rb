@@ -5,7 +5,7 @@ class CreateModels < ActiveRecord::Migration[8.0]
     create_api_logs
     create_artists
     create_songs
-    create_plays
+    create_song_plays
   end
 
   private
@@ -34,8 +34,8 @@ class CreateModels < ActiveRecord::Migration[8.0]
     end
   end
 
-  def create_plays
-    create_table :plays do |t|
+  def create_song_plays
+    create_table :song_plays do |t|
       t.integer :ms_played, null: false
       t.references :song, null: false, foreign_key: true
       t.datetime :created_at, null: false, precision: 0, index: true

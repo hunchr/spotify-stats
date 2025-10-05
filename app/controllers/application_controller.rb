@@ -15,15 +15,19 @@ class ApplicationController < ActionController::Base
   private
 
   def render_table(column_names, collection)
-    column_name = column_names.include?(params[:sort]) ? params[:sort] : column_names.last
-    dir = DIRS.include?(params[:dir]) ? params[:dir] : COLUMNS[column_name][:dir]
-    search_fields = filter! column_names, collection
-
-    render "shared/table", locals: { column_names:, search_fields:, collection:
-      collection.order(column_name => dir).limit(LIMIT).offset(page_offset) }
+    render "shared/table", locals: {
+      column_names:, search_fields: filter_collection!(column_names, collection),
+      collection: sort_collection(column_names, collection).limit(LIMIT).offset(page_offset)
+    }
   end
 
-  def filter!(column_names, collection)
+  def sort_collection(column_names, collection)
+    column_name = params[:sort]&.presence_in(column_names) || column_names.last
+    dir = params[:dir]&.presence_in(DIRS) || COLUMNS[column_name][:dir]
+    collection.order column_name => dir
+  end
+
+  def filter_collection!(column_names, collection)
     column_names.select do |column_name|
       type = COLUMNS[column_name][:as]
       next if type.nil?
@@ -40,9 +44,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def filter_date
-    { plays: { created_at: params[:since]&.to_time..params[:until]&.to_date&.end_of_day } }
-  rescue StandardError
+  def where_date
+    from = params[:since]&.to_date
+    to = params[:until]&.to_date&.tomorrow
+
+    if from && to then " WHERE p.created_at BETWEEN '#{from}' AND '#{to}'"
+    elsif from then " WHERE p.created_at >= '#{from}'"
+    elsif to then " WHERE p.created_at <= '#{to}'"
+    end
+  rescue Date::Error
     nil
   end
 

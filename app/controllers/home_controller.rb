@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   before_action :authorize
 
   def show
-    @plays_count = Play.count
+    @plays_count = SongPlay.count
     redirect_to new_import_path if @plays_count.zero?
   end
 

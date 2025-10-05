@@ -44,47 +44,47 @@ module ApplicationHelper
     url_for(**params.to_unsafe_h, sort: column_name, dir:)
   end
 
-  def td_artist_name(resource)
-    tag.td link_to(resource[:artist_name], artist_path(resource[:artist_id])), class: "max-w-12"
+  def td_artist_name(r)
+    tag.td link_to(r["artist_name"], artist_path(r["artist_id"])), class: "max-w-12"
   end
 
-  def td_date(resource)
-    tag.td resource[:date], class: "text-right"
+  def td_date(r)
+    tag.td r["date"], class: "text-right"
   end
 
-  def td_duration(resource)
-    tag.td duration_in_words(resource[:duration]), class: "text-right"
+  def td_duration(r)
+    tag.td duration_in_words(r["duration"]), class: "text-right"
   end
 
-  def td_end_date(resource)
-    tag.td resource[:end_date], class: "text-right"
+  def td_end_date(r)
+    tag.td r["end_date"], class: "text-right"
   end
 
-  def td_first_played_at(resource)
-    tag.td resource[:first_played_at][..9], class: "text-right"
+  def td_first_played_at(r)
+    tag.td r["first_played_at"][..9], class: "text-right"
   end
 
-  def td_last_played_at(resource)
-    tag.td resource[:last_played_at][..9], class: "text-right"
+  def td_last_played_at(r)
+    tag.td r["last_played_at"][..9], class: "text-right"
   end
 
-  def td_name(resource)
-    tag.td link_to(resource[:name], artist_path(resource[:id])), class: "max-w-12"
+  def td_name(r)
+    tag.td link_to(r["name"], artist_path(r["id"])), class: "max-w-12"
   end
 
-  def td_plays_count(resource)
-    tag.td resource[:plays_count], class: "text-right"
+  def td_plays_count(r)
+    tag.td r["plays_count"], class: "text-right"
   end
 
-  def td_start_date(resource)
-    tag.td resource[:start_date], class: "text-right"
+  def td_start_date(r)
+    tag.td r["start_date"], class: "text-right"
   end
 
-  def td_streak_length(resource)
-    tag.td resource[:streak_length], class: "text-right"
+  def td_streak_length(r)
+    tag.td r["streak_length"], class: "text-right"
   end
 
-  def td_title(resource)
-    tag.td link_to resource[:title], song_path(resource[:id])
+  def td_title(r)
+    tag.td link_to r["title"], song_path(r["id"])
   end
 end

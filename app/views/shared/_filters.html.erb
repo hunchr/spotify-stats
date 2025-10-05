@@ -6,11 +6,11 @@
 
   <div>
     <%= f.label :since, t(:from) %>
-    <%= f.date_field :since, value: params[:since] || Rails.configuration.x.date_range.begin %>
+    <%= f.date_field :since, value: params[:since].presence || Rails.configuration.x.date_range.begin %>
   </div>
   <div>
     <%= f.label :until, t(:to) %>
-    <%= f.date_field :until, value: params[:until] || Rails.configuration.x.date_range.end %>
+    <%= f.date_field :until, value: params[:until].presence || Rails.configuration.x.date_range.end %>
   </div>
 
   <% search_fields.each do |name| %>

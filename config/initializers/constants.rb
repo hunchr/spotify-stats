@@ -19,7 +19,7 @@ LIMIT = 200
 
 Rails.application.config.after_initialize do
   Rails.application.config.x.date_range = begin
-    Range.new(*DIRS.map { Play.order(created_at: it).first&.created_at })
+    Range.new(*DIRS.map { SongPlay.order(created_at: it).first&.created_at })
   rescue ActiveRecord::StatementInvalid
     nil..nil
   end

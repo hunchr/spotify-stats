@@ -2,7 +2,7 @@
 
 class Song < ApplicationRecord
   belongs_to :artist
-  has_many :plays, dependent: :destroy
+  has_many :plays, class_name: :SongPlay, dependent: :destroy
 
   validates :uri, :title, presence: true
 end

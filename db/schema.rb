@@ -24,12 +24,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_01_000000) do
     t.index ["name"], name: "index_artists_on_name", unique: true
   end
 
-  create_table "plays", force: :cascade do |t|
+  create_table "song_plays", force: :cascade do |t|
     t.integer "ms_played", null: false
     t.integer "song_id", null: false
     t.datetime "created_at", precision: 0, null: false
-    t.index ["created_at"], name: "index_plays_on_created_at"
-    t.index ["song_id"], name: "index_plays_on_song_id"
+    t.index ["created_at"], name: "index_song_plays_on_created_at"
+    t.index ["song_id"], name: "index_song_plays_on_song_id"
   end
 
   create_table "songs", force: :cascade do |t|
@@ -40,6 +40,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_01_000000) do
     t.index ["title"], name: "index_songs_on_title"
   end
 
-  add_foreign_key "plays", "songs"
+  add_foreign_key "song_plays", "songs"
   add_foreign_key "songs", "artists"
 end
