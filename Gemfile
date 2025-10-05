@@ -15,3 +15,4 @@ gem "rubocop-performance", require: false
 gem "rubocop-rails", require: false
 gem "sqlite3", require: false
 gem "stimulus-rails"
+gem "turbo-rails"
