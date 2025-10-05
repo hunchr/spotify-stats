@@ -1,0 +1,23 @@
+<h1><%= t :stats %></h1>
+
+<h2><%= t :music %></h2>
+<%= render "shared/table" do %>
+  <tr><th><%= t :artists %></th><td class="text-right"><%= @stats["artists_count"] %></td></tr>
+  <tr><th><%= t :songs %></th><td class="text-right"><%= @stats["songs_count"] %></td></tr>
+  <tr><th><%= t :plays %></th><td class="text-right"><%= @stats["song_plays_count"] %></td></tr>
+  <tr>
+    <th><%= t :duration %></th>
+    <td class="text-right"><%= duration_in_words @stats["song_plays_duration"] %></td>
+  </tr>
+<% end %>
+
+<h2><%= t :podcasts %></h2>
+<%= render "shared/table" do %>
+  <tr><th><%= t :podcasts %></th><td class="text-right"><%= @stats["podcasts_count"] %></td></tr>
+  <tr><th><%= t :episodes %></th><td class="text-right"><%= @stats["episodes_count"] %></td></tr>
+  <tr><th><%= t :plays %></th><td class="text-right"><%= @stats["episode_plays_count"] %></td></tr>
+  <tr>
+    <th><%= t :duration %></th>
+    <td class="text-right"><%= duration_in_words @stats["episode_plays_duration"] %></td>
+  </tr>
+<% end %>

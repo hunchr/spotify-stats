@@ -24,6 +24,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_01_000000) do
     t.index ["name"], name: "index_artists_on_name", unique: true
   end
 
+  create_table "episode_plays", force: :cascade do |t|
+    t.integer "ms_played", null: false
+    t.integer "episode_id", null: false
+    t.datetime "created_at", precision: 0, null: false
+    t.index ["created_at"], name: "index_episode_plays_on_created_at"
+    t.index ["episode_id"], name: "index_episode_plays_on_episode_id"
+  end
+
+  create_table "episodes", force: :cascade do |t|
+    t.string "uri", null: false
+    t.string "title", null: false
+    t.integer "podcast_id", null: false
+    t.index ["podcast_id"], name: "index_episodes_on_podcast_id"
+    t.index ["title"], name: "index_episodes_on_title"
+  end
+
+  create_table "podcasts", force: :cascade do |t|
+    t.string "name", null: false
+    t.index ["name"], name: "index_podcasts_on_name", unique: true
+  end
+
   create_table "song_plays", force: :cascade do |t|
     t.integer "ms_played", null: false
     t.integer "song_id", null: false
@@ -40,6 +61,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_01_000000) do
     t.index ["title"], name: "index_songs_on_title"
   end
 
+  add_foreign_key "episode_plays", "episodes"
+  add_foreign_key "episodes", "podcasts"
   add_foreign_key "song_plays", "songs"
   add_foreign_key "songs", "artists"
 end

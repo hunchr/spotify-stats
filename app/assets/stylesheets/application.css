@@ -8,18 +8,14 @@ h1 {
 }
 
 h2 {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   margin: 1rem 1rem 0.25rem 1rem;
 }
 
 h3 {
-  font-size: 1.125rem;
-  margin: 0.5rem 0 0 0;
-}
-
-h4 {
+  font-size: 1rem;
+  margin: 0.25rem 0 0 0;
   text-decoration: underline;
-  margin: 0.5rem 0 0 0;
 }
 
 a {

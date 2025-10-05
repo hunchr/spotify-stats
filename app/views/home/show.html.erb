@@ -1,35 +1,35 @@
-<h1><%= t :stats %></h1>
-
-<h2><%= t :total %></h2>
+<h1><%= t :pages %></h1>
 <%= render "shared/table" do %>
-  <tr><th><%= t :artists %></th><td class="text-right"><%= Artist.count %></td></tr>
-  <tr><th><%= t :songs %></th><td class="text-right"><%= Song.count %></td></tr>
-  <tr><th><%= t :plays %></th><td class="text-right"><%= @plays_count %></td></tr>
-  <tr>
-    <th><%= t :duration %></th>
-    <td class="text-right"><%= duration_in_words SongPlay.sum :ms_played %></td>
-  </tr>
+  <tr><th><%= link_to new_import_path, new_import_path %></th><td><%= t :import_streaming_history %></th></tr>
+  <tr><th><%= link_to stats_path, stats_path %></th><td><%= t :stats %></th></tr>
 <% end %>
 
-<h2><%= t :guide %></h2>
+<h2><%= t :music %></h2>
 <%= render "shared/table" do %>
-  <tr><th><h3><%= t :pages %></h3></th></tr>
   <tr><th><%= link_to artists_path, artists_path %></th><td><%= t :artists %></th></tr>
   <tr><th><%= link_to streak_artists_path, streak_artists_path %></th><td><%= t :artists_streak %></th></tr>
   <tr><th><%= link_to songs_path, songs_path %></th><td><%= t :songs %></th></tr>
   <tr><th><%= link_to per_day_songs_path, per_day_songs_path %></th><td><%= t :songs_per_day %></th></tr>
-  <tr><th><%= link_to new_import_path, new_import_path %></th><td><%= t :import_streaming_history %></th></tr>
+<% end %>
 
-  <tr><th><h3><%= t :filtering %></h3></th></tr>
-  <tr><th><h4><%= t :text %></h4></th></tr>
+<h2><%= t :podcasts %></h2>
+<%= render "shared/table" do %>
+  <tr><th><%= link_to podcasts_path, podcasts_path %></th><td><%= t :podcasts %></th></tr>
+<% end %>
+
+<h2><%= t :filtering %></h2>
+<%= render "shared/table" do %>
+  <tr><th><h3><%= t :text %></h3></th></tr>
   <tr><th>hello</th><td><%= t :text_starts_with %></td></tr>
   <tr><th>%hello</th><td><%= t :text_contains %></td></tr>
-  <tr><th><h4><%= t :numbers %></h4></th></tr>
+  <tr><th><h3><%= t :numbers %></h3></th></tr>
   <tr><th>..10</th><td><%= t :number_less_than_or_equal %></td></tr>
   <tr><th>10</th><td><%= t :number_exactly %></td></tr>
   <tr><th>10..</th><td><%= t :number_more_than_or_equal %></td></tr>
   <tr><th>10..20</th><td><%= t :number_between %></td></tr>
+<% end %>
 
-  <tr><th><h3><%= t :sorting %></h3></th></tr>
+<h2><%= t :sorting %></h2>
+<%= render "shared/table" do %>
   <tr><th>asc/desc</th><td><%= t :click_to_sort %></td></tr>
 <% end %>

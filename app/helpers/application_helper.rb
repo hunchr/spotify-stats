@@ -69,7 +69,11 @@ module ApplicationHelper
   end
 
   def td_name(r)
-    tag.td link_to(r["name"], artist_path(r["id"])), class: "max-w-12"
+    if r.is_a? Podcast
+      tag.td link_to r["name"], podcast_path(r["id"])
+    else
+      tag.td link_to(r["name"], artist_path(r["id"])), class: "max-w-12"
+    end
   end
 
   def td_plays_count(r)
