@@ -17,6 +17,7 @@ class Stats < Rails::Application
   config.assets.quiet = true
   config.eager_load = false
   config.enable_reloading = true
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.i18n.available_locales = %i[en]
   config.i18n.default_locale = :en
   config.i18n.raise_on_missing_translations = true

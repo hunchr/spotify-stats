@@ -8,6 +8,7 @@ gem "rails", "~> 8.0.0"
 
 gem "dotenv-rails"
 gem "importmap-rails"
+gem "listen", require: false
 gem "propshaft"
 gem "puma", require: false
 gem "rubocop-performance", require: false
