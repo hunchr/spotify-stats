@@ -36,7 +36,7 @@ class SongsController < ApplicationController
       "CROSS JOIN (#{most_plays_in "month", "%Y-%m-01"}) " \
       "CROSS JOIN (#{most_plays_in "year", "%Y-01-01"})",
     ).first
-    @api_data = spotify&.songs&.find @song.uri
+    @api_data = spotify&.get_song @song.uri
   end
 
   private

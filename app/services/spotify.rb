@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: refactor
 class Spotify
   @client_id = ENV.fetch "SPOTIFY_CLIENT_ID", nil
   @client_secret = ENV.fetch "SPOTIFY_CLIENT_SECRET", nil
@@ -10,7 +9,7 @@ class Spotify
     attr_reader :client_id, :client_secret, :redirect_uri
 
     def authorize_url(scopes)
-      Api.build "https://accounts.spotify.com/authorize", {
+      Http.url "https://accounts.spotify.com/authorize", {
         client_id:, redirect_uri:, response_type: :code,
         scope: scopes.join("%20"),
         state: SecureRandom.hex(8)
@@ -30,8 +29,8 @@ class Spotify
     private
 
     def get_token(params)
-      res = Api.post "Basic #{Base64.strict_encode64 "#{client_id}:#{client_secret}"}",
-        "https://accounts.spotify.com/api/token", params
+      res = Http.post Http.url("https://accounts.spotify.com/api/token", params),
+        { authorization: "Basic #{Base64.strict_encode64 "#{client_id}:#{client_secret}"}" }
 
       {
         "access_token" => res["access_token"], "refresh_token" => res["refresh_token"],
@@ -41,10 +40,11 @@ class Spotify
   end
 
   def initialize(access_token)
-    @bearer = "Bearer #{access_token}"
+    @headers = { authorization: "Bearer #{access_token}" }
   end
 
-  def songs
-    Song.new @bearer
+  # https://developer.spotify.com/documentation/web-api/reference/get-track
+  def get_song(id)
+    Http.get URI("https://api.spotify.com/v1/tracks/#{id}"), @headers
   end
 end
