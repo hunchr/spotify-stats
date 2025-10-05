@@ -5,10 +5,10 @@
 <table>
   <thead>
     <tr>
-      <th><%= t "columns.index" %></th>
+      <th><%= t :index %></th>
 
       <% column_names.each do |column_name| %>
-        <th><%= link_to t("columns.#{column_name}"), sort_path(column_name) %></th>
+        <th><%= link_to t(column_name), sort_path(column_name) %></th>
       <% end %>
     </tr>
   </thead>

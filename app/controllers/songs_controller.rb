@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class SongsController < ApplicationController
-  INDEX = %w[title artist_name plays_count plays_length first_played_at last_played_at].freeze
+  INDEX = %w[title artist_name plays_count duration first_played_at last_played_at].freeze
 
   def index
     songs = Song.joins(:artist, :plays)
       .select("songs.*, artists.name AS artist_name," \
               "COUNT(plays.id) AS plays_count," \
-              "SUM(plays.ms_played) AS plays_length," \
+              "SUM(plays.ms_played) AS duration," \
               "MIN(plays.created_at) AS first_played_at," \
               "MAX(plays.created_at) AS last_played_at")
       .where(filter_date).group(songs: :id).to_sql
@@ -15,13 +15,13 @@ class SongsController < ApplicationController
     render_table INDEX, Song.select("*").from("(#{songs}) AS songs")
   end
 
-  PER_DAY = %w[title artist_name plays_count plays_length date].freeze
+  PER_DAY = %w[title artist_name plays_count duration date].freeze
 
   def per_day
     songs = Song.joins(:artist, :plays)
       .select("songs.*, artists.name AS artist_name," \
               "COUNT(plays.id) AS plays_count," \
-              "SUM(plays.ms_played) AS plays_length," \
+              "SUM(plays.ms_played) AS duration," \
               "DATE(plays.created_at) AS date")
       .where(filter_date).group(:date, songs: :id).to_sql
 

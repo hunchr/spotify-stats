@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class ArtistsController < ApplicationController
-  INDEX = %w[name plays_count plays_length first_played_at last_played_at].freeze
+  INDEX = %w[name plays_count duration first_played_at last_played_at].freeze
 
   def index
     artists = Artist.joins(:plays)
       .select("artists.*," \
               "COUNT(plays.id) AS plays_count," \
-              "SUM(plays.ms_played) AS plays_length," \
+              "SUM(plays.ms_played) AS duration," \
               "MIN(plays.created_at) AS first_played_at," \
               "MAX(plays.created_at) AS last_played_at")
       .where(filter_date).group(artists: :id).to_sql

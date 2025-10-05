@@ -52,6 +52,10 @@ module ApplicationHelper
     tag.td resource[:date], class: "text-right"
   end
 
+  def td_duration(resource)
+    tag.td duration_in_words(resource[:duration]), class: "text-right"
+  end
+
   def td_end_date(resource)
     tag.td resource[:end_date], class: "text-right"
   end
@@ -70,10 +74,6 @@ module ApplicationHelper
 
   def td_plays_count(resource)
     tag.td resource[:plays_count], class: "text-right"
-  end
-
-  def td_plays_length(resource)
-    tag.td duration_in_words(resource[:plays_length]), class: "text-right"
   end
 
   def td_start_date(resource)

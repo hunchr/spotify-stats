@@ -5,20 +5,20 @@
   <%= f.hidden_field :dir, value: params[:dir] %>
 
   <div>
-    <%= f.label :since %>
+    <%= f.label :since, t(:from) %>
     <%= f.date_field :since, value: params[:since] || Rails.configuration.x.date_range.begin %>
   </div>
   <div>
-    <%= f.label :until %>
+    <%= f.label :until, t(:to) %>
     <%= f.date_field :until, value: params[:until] || Rails.configuration.x.date_range.end %>
   </div>
 
   <% search_fields.each do |name| %>
     <div>
-      <%= f.label name, t("columns.#{name}") %>
+      <%= f.label name, t(name) %>
       <%= f.text_field name, value: params[name] %>
     </div>
   <% end %>
 
-  <%= f.submit t("helpers.button.search"), name: nil %>
+  <%= f.submit :search, name: nil %>
 <% end %>

@@ -3,12 +3,12 @@
 COLUMNS = {
   artist_name: { as: :string, dir: :asc },
   date: { dir: :desc },
+  duration: { dir: :desc },
   end_date: { dir: :desc },
   first_played_at: { dir: :asc },
   last_played_at: { dir: :desc },
   name: { as: :string, dir: :asc },
   plays_count: { as: :number, dir: :desc },
-  plays_length: { dir: :desc },
   start_date: { dir: :asc },
   streak_length: { as: :number, dir: :desc },
   title: { as: :string, dir: :asc },

@@ -1,64 +1,53 @@
 en:
-  columns:
-    artist_name: Artist
-    date: Date
-    end_date: End date
-    first_played_at: First played
-    index: "#"
-    last_played_at: Last played
-    name: Name
-    plays_count: Plays
-    plays_length: Duration
-    start_date: Start date
-    streak_length: Streak
-    title: Title
-
-  helpers:
-    button:
-      import: Import
-      search: Search
-    label:
-      artist_name: Artist
-      history: Streaming history
-      q: Name
-      since: From
-      until: To
-
-  labels:
-    artists: Artists
-    artists_streak: Artists daily listening streak
-    click_to_sort: Click on a column name to sort it, and again to reverse the order
-    cover: Cover
-    day: Day
-    filtering: Filtering
-    genres: Genres
-    guide: Guide
-    import_streaming_history: Import streaming history
-    month: Month
-    number_between: Between 10 and 20
-    number_exactly: Exactly 10
-    number_less_than_or_equal: Less than or equal to 10
-    number_more_than_or_equal: More than or equal to 10
-    numbers: Numbers
-    pages: Pages
-    plays: Plays
-    popularity: Popularity
-    release_date: Release date
-    songs: Songs
-    songs_per_day: Songs grouped by day
-    sorting: Sorting
-    text: Text
-    text_contains: Contains 'hello'
-    text_starts_with: Starts with 'hello'
-    themes: Themes
-    total: Total
-    uri: ID
-    vocadb: VocaDB
-    year: Year
-
-  stats:
-    most_plays_in: Most plays in a
-    plays_count: "%{count} plays"
-    title: Stats
-    total_duration: Total duration
-    total_plays: Total plays
+  artist_name: Artist
+  artists: Artists
+  artists_streak: Artists daily listening streak
+  click_to_sort: Click on a column name to sort it, and again to reverse the order
+  cover: Cover
+  date: Date
+  day: Day
+  duration: Duration
+  end_date: End date
+  filtering: Filtering
+  first_played_at: First played
+  from: From
+  genres: Genres
+  guide: Guide
+  history: Streaming history
+  import: Import
+  import_streaming_history: Import streaming history
+  index: "#"
+  last_played_at: Last played
+  month: Month
+  most_plays_in: Most plays in a
+  name: Name
+  number_between: Between 10 and 20
+  number_exactly: Exactly 10
+  number_less_than_or_equal: Less than or equal to 10
+  number_more_than_or_equal: More than or equal to 10
+  numbers: Numbers
+  pages: Pages
+  plays: Plays
+  plays_count: Plays
+  plays_counter: "%{count} plays"
+  popularity: Popularity
+  release_date: Release date
+  search: Search
+  songs: Songs
+  songs_per_day: Songs grouped by day
+  sorting: Sorting
+  start_date: Start date
+  stats: Stats
+  streak_length: Streak
+  text: Text
+  text_contains: Contains 'hello'
+  text_starts_with: Starts with 'hello'
+  themes: Themes
+  title: Title
+  to: To
+  total: Total
+  total_duration: Total duration
+  total_plays: Total plays
+  uri: ID
+  vocadb: VocaDB
+  year: Year
